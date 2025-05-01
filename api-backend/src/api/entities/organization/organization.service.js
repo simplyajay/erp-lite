@@ -16,13 +16,10 @@ class OrganizationService {
     return await this.organizationRepository.findById(id);
   }
 
-  async emailExists(req) {
-    try {
-      const { email } = req.body;
-      return await Organization.exists({ email: email.toLowerCase() });
-    } catch (error) {
-      throw error;
-    }
+  async fieldExists(field, value) {
+    if (field) return await this.organizationRepository.doesExist(field, value);
+
+    return false;
   }
 
   async updateOrganizationById() {}

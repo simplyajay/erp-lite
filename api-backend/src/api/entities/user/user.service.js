@@ -33,9 +33,10 @@ class UserService {
     return await this.userRepository.findById(_id, { password: 0 });
   }
 
-  async emailExists(req) {
-    const { email } = req.body;
-    return await User.exists({ email: email.toLowerCase() });
+  async fieldExists(field, value) {
+    if (field) return await this.userRepository.doesExist(field, value);
+
+    return false;
   }
 }
 

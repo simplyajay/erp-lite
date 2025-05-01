@@ -63,6 +63,14 @@ class ModelRepository {
     }
   }
 
+  async doesExist(key, value) {
+    try {
+      return await this.model.exists({ [key]: value.toLowerCase() });
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async updateById(id, updateData, options = {}) {
     try {
       return await this.model.findByIdAndUpdate(id, updateData, options);
