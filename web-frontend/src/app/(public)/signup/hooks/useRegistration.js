@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export const useRegistration = ({}) => {
+export const useRegistration = ({ defaultValues }) => {
   const [state, setState] = useState({
     step: 1,
-    formData: {},
+    formValues: { ...defaultValues, ...someOtherObj },
     accountType: "individual",
   });
 

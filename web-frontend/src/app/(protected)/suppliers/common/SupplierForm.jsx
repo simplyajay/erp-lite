@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Form from "@/components/forms/newForm/FormNew";
 import { updateSupplier } from "@/api/supplier";
 import { addSupplier } from "@/api/supplier";
@@ -15,9 +15,7 @@ const SupplierForm = ({ state, updateState, fetchSuppliers, entity }) => {
 
   const { form } = state;
 
-  const formValues = useMemo(() => {
-    return form.type === "edit" ? getEntityFormValues(entity) : getEntityFormValues();
-  }, [entity, form.type]);
+  const formValues = form.type === "edit" ? getEntityFormValues(entity) : getEntityFormValues();
 
   const hideForm = () => {
     updateState({ form: { ...form, visible: false } });
