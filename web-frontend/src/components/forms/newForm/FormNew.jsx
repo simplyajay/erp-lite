@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useFormHandler } from "./hooks/useFormHandler";
 
 const Form = ({ values, config, loading, validationSchema }) => {
-  const { register, handleSubmit, formState, clearErrors, reset, setError } = useForm({
+  const { register, handleSubmit, formState, clearErrors, reset, setError, getValues } = useForm({
     mode: "onSubmit",
     reValidateMode: "onBlur",
     resolver: yupResolver(validationSchema),
@@ -50,7 +50,7 @@ const Form = ({ values, config, loading, validationSchema }) => {
       </div>
       {config?.buttons && (
         <div className="flex justify-end items-center p-2 gap-4">
-          {renderButtons(config.buttons)}
+          {renderButtons(config.buttons, getValues)}
         </div>
       )}
     </form>

@@ -3,7 +3,13 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
     title: "Account Type",
     buttons: {
       submit: { placeholder: step < 5 ? "Next" : "Confirm", fn: onSubmit },
-      cancel: { placeholder: "Back", fn: onCancel },
+      cancel: {
+        placeholder: "Back",
+        fn: (context) => {
+          const values = context?.getValues?.();
+          onCancel?.(values);
+        },
+      },
     },
   };
   try {
