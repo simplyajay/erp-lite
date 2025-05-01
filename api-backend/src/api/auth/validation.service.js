@@ -3,24 +3,31 @@ import organizationService from "../entities/organization/organization.service.j
 import createError from "http-errors";
 
 class ValidationService {
-  async validateOrganizationEmail(req) {
-    const exists = await organizationService.emailExists(req);
+  async validateFields(req) {
+    const { user, organization } = req.body;
 
-    if (exists) {
-      throw createError(409, "Email already taken");
+    const allowedFields = ["username", "email"];
+
+    const checkField = async (entity, name, service, field) => {
+      if (!entity?.[field]) return;
+
+      const value = entity[field];
+
+      const exists = await service.fieldExists(field, value);
+
+      if (exists) {
+        const error = createError(409, `This ${field} is already taken.`);
+        error.data = { entity: name, keyValue: { [field]: value } };
+        throw error;
+      }
+    };
+
+    for (const field of allowedFields) {
+      await checkField(user, "user", userService, field);
+      await checkField(organization, "organization", organizationService, field);
     }
 
-    return { emailValid: true };
-  }
-
-  async validateUserEmail(req) {
-    const exists = await userService.emailExists(req);
-
-    if (exists) {
-      throw createError(409, "Email already taken");
-    }
-
-    return { emailValid: true };
+    return { valid: true };
   }
 }
 

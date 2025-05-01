@@ -28,8 +28,8 @@ class APIService {
       if (error.code === 11000 || error.status === 409 || error.code === 409) {
         return res.status(409).json({
           ok: false,
-          data: error.keyValue || undefined,
-          message: conflictMessage || "Conflict: Duplicate entry",
+          data: error.data || error.keyValue || undefined,
+          message: conflictMessage || error.message || "Conflict: Duplicate entry",
         });
       }
       return res.status(500).json({ ok: false, data: undefined, message: "Internal Server Error" });
