@@ -4,27 +4,29 @@ import createError from "http-errors";
 
 class ValidationService {
   async validateFields(req) {
-    const { user, organization } = req.body;
+    const entity = req.query?.entity;
+    const data = req.body;
 
-    const allowedFields = ["username", "email"];
+    if (!["user", "organization"].includes(entity)) {
+      console.error("Invalid entity type");
+      return;
+    }
 
-    const checkField = async (entity, name, service, field) => {
-      if (!entity?.[field]) return;
+    const fieldsToValidate = ["username", "email"];
+    const service = entity === "organization" ? organizationService : userService;
 
-      const value = entity[field];
+    for (const field of fieldsToValidate) {
+      if (!data?.[field]) continue;
+
+      const value = data[field];
 
       const exists = await service.fieldExists(field, value);
 
       if (exists) {
         const error = createError(409, `This ${field} is already taken.`);
-        error.data = { entity: name, keyValue: { [field]: value } };
+        error.keyValue = { [field]: value };
         throw error;
       }
-    };
-
-    for (const field of allowedFields) {
-      await checkField(user, "user", userService, field);
-      await checkField(organization, "organization", organizationService, field);
     }
 
     return { valid: true };
