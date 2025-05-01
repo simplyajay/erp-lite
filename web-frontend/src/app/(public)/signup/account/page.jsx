@@ -1,11 +1,10 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
-import { useRegistration } from "../hooks/useRegistration";
 import { getValidationSchema, getInitialValues } from "../util/form.util";
 import { getFormConfig } from "../config/form.config";
 import AccountType from "../components/registration-steps/AccountType";
 import Form from "@/components/forms/newForm/FormNew";
-import { validateOrgEmail, validateUserEmail } from "@/api/auth";
+import { validateFields } from "@/api/auth";
 
 const RegistrationPage = () => {
   const [type, setType] = useState(undefined);
@@ -32,61 +31,43 @@ const RegistrationPage = () => {
 
   const handlePrev = () => handlePageChange("prev");
 
-  const handleNext = (values) => {
-    if (step < MAX_STEP) handlePageChange("next");
-  };
-
-  const persistAndBlock = ({ values, field, message, setError }) => {
-    setError(field, { type: "manual", message });
-    setFormData((prev) => ({ ...prev, ...values }));
-    setLoading(false);
-  };
+  const handleNext = () => step < MAX_STEP && handlePageChange("next");
 
   const handleValidate = async ({ values, setError }) => {
     try {
       setLoading(true);
-      if (step === 1) {
-        const { organization } = values;
-        const res = await validateOrgEmail(organization?.email);
-        if (!res.ok && res.status === 409) {
-          return persistAndBlock({
-            values,
-            field: "organization.email",
-            message: "This email is already taken.",
-            setError,
-          });
-        }
-      }
-
-      if (step === 3) {
-        const { user } = values;
-        const res = await validateUserEmail(user?.email);
-        if (!res.ok && res.status === 409) {
-          return persistAndBlock({
-            values,
-            field: "user.email",
-            message: "This email is already taken.",
-            setError,
-          });
-        }
-      }
-
       setFormData((prev) => ({ ...prev, ...values }));
+
+      if (step === 1 || step === 3) {
+        const res = await validateFields(values);
+        if (!res.ok && res.status === 409) {
+          const { entity, keyValue } = res.data;
+          const key = Object.keys(keyValue)[0]; // access key inside keyValue from error
+          setError(`${entity}.${key}`, { type: "manual", message: res.message });
+          setLoading(false);
+          return;
+        }
+      }
+
       handleNext(values);
       setLoading(false);
     } catch (error) {
       console.error(error);
+      setLoading(false);
     }
   };
 
   const validationSchema = getValidationSchema(step);
   const config = getFormConfig({ step, onSubmit: handleValidate, onCancel: handlePrev });
 
-  const values = (() => {
-    const defaultValues = getInitialValues(type);
+  useEffect(() => {
+    if (!type) return;
 
-    return { ...defaultValues, ...formData };
-  })();
+    const values = getInitialValues(type);
+
+    if (step === 0) setFormData(values);
+    setFormData((prev) => ({ ...values, ...prev }));
+  }, [type, step]);
 
   return (
     <div className="w-full h-full p-10 flex items-center justify-center">
@@ -104,7 +85,7 @@ const RegistrationPage = () => {
           )}
           {step > MIN_STEP && step < MAX_STEP && (
             <Form
-              values={values}
+              values={formData}
               validationSchema={validationSchema}
               config={config}
               loading={loading}

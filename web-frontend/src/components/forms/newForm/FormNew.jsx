@@ -14,11 +14,7 @@ const Form = ({ values, config, loading, validationSchema }) => {
   });
   const { errors } = formState;
 
-  useEffect(() => {
-    if (Object.keys(errors).length === 0) reset(values);
-  }, [values, reset]);
-
-  const submitFn = ({ values, setError, errors, reset }) => {
+  const submitFn = (values) => {
     const fn = config?.buttons?.submit?.fn;
 
     if (fn) return fn({ values, setError, errors, reset });
@@ -26,11 +22,15 @@ const Form = ({ values, config, loading, validationSchema }) => {
     return console.warn("No submit handler defined");
   };
 
+  useEffect(() => {
+    reset(values);
+  }, [values]);
+
   const { renderInput, renderButtons } = useFormHandler({ register, errors, clearErrors, loading });
   return (
     <form
       className="h-full w-full flex flex-col overflow-hidden"
-      onSubmit={handleSubmit((values) => submitFn({ values, setError, errors, reset }))}
+      onSubmit={handleSubmit((values) => submitFn(values))}
     >
       <div className="flex justify-center items-center p-2 text-lg">
         <span>{config.title ?? "Form Title"}</span>

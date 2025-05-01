@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import Form from "@/components/forms/newForm/FormNew";
 import { updateProduct } from "@/api/products";
 import { addProduct } from "@/api/products";
@@ -11,9 +11,7 @@ const StockForm = ({ state, updateState, fetchProduct, entity }) => {
 
   const { form } = state;
 
-  const formValues = useMemo(() => {
-    return form.type === "edit" ? getProductFormValues(entity) : getProductFormValues();
-  }, [entity, form.type]);
+  const formValues = form.type === "edit" ? getProductFormValues(entity) : getProductFormValues();
 
   const hideForm = () => {
     updateState({ form: { ...form, visible: false } });
