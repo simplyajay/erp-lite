@@ -84,14 +84,16 @@ export const useFormHandler = ({ register, errors, clearErrors, loading }) => {
   );
 
   const renderButtons = useCallback(
-    (buttons) => {
+    (buttons, getValues) => {
       return (
         <>
           <button
             type="button"
             disabled={loading}
             className="w-[70px] flex justify-center items-center p-2 border rounded-sm hover:cursor-pointer"
-            onClick={buttons?.cancel?.fn}
+            onClick={() => {
+              if (typeof buttons?.cancel?.fn === "function") buttons?.cancel?.fn({ getValues });
+            }}
           >
             {buttons?.cancel?.placeholder ? buttons.cancel.placeholder : "Cancel"}
           </button>
