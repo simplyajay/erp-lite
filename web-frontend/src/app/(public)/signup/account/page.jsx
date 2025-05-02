@@ -2,9 +2,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { getValidationSchema, getInitialValues } from "../util/form.util";
 import { getFormConfig } from "../config/form.config";
-import AccountType from "../components/registration-steps/AccountType";
-import Form from "@/components/forms/newForm/FormNew";
 import { validateFields } from "@/api/auth";
+import AccountType from "../components/AccountType";
+import Form from "@/components/forms/newForm/FormNew";
+import ConfirmDetails from "../components/ConfirmDetails";
 
 const RegistrationPage = () => {
   const [type, setType] = useState(undefined);
@@ -64,7 +65,11 @@ const RegistrationPage = () => {
   };
 
   const validationSchema = getValidationSchema(step);
-  const config = getFormConfig({ step, onSubmit: handleValidate, onCancel: handleCancel });
+  const { formConfig, detailsConfig } = getFormConfig({
+    step,
+    onSubmit: handleValidate,
+    onCancel: handleCancel,
+  });
 
   useEffect(() => {
     if (!type) return;
@@ -77,28 +82,26 @@ const RegistrationPage = () => {
 
   return (
     <div className="w-full h-full p-10 flex items-center justify-center">
-      <div className="h-[350px] w-[350px] max-w-[400px] flex flex-col">
-        {`step: ${step}`}
-        <div className="flex-1 flex justify-center items-center">
-          {step === MIN_STEP && (
-            <AccountType
-              setSelected={(selectedType) => {
-                setType(selectedType);
-                setFormData(getInitialValues(selectedType));
-              }}
-              selected={type}
-              onButtonClick={() => handlePageChange("next")}
-            />
-          )}
-          {step > MIN_STEP && step < MAX_STEP && (
-            <Form
-              values={formData}
-              validationSchema={validationSchema}
-              config={config}
-              loading={loading}
-            />
-          )}
-        </div>
+      <div className="h-[500px] w-[500px] max-w-[400px] p-4 flex flex-col">
+        {step === MIN_STEP && (
+          <AccountType
+            setSelected={(selectedType) => {
+              setType(selectedType);
+              setFormData(getInitialValues(selectedType));
+            }}
+            selected={type}
+            onButtonClick={() => handlePageChange("next")}
+          />
+        )}
+        {step > MIN_STEP && step < MAX_STEP && (
+          <Form
+            values={formData}
+            validationSchema={validationSchema}
+            config={formConfig}
+            loading={loading}
+          />
+        )}
+        {step === MAX_STEP && <ConfirmDetails values={formData} config={detailsConfig} />}
       </div>
     </div>
   );

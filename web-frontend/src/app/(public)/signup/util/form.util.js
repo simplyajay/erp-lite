@@ -3,10 +3,10 @@ import * as Yup from "yup";
 export const getInitialValues = (type) => ({
   organization: type === "organization" ? { name: "", email: "", phone: "" } : undefined,
   user: {
+    username: "",
     firstname: "",
     middlename: "",
     lastname: "",
-    username: "",
     email: "",
     phone: "",
     password: "",
