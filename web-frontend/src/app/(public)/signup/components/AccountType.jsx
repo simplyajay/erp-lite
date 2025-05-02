@@ -4,7 +4,7 @@ import { SingleUserIcon, MultiUserIcon } from "@/components/icons/Icons";
 
 const AccountType = ({ setSelected, selected, onButtonClick }) => {
   return (
-    <div className="flex-1 w-full flex flex-col items-center gap-8">
+    <di v className="flex-1 w-full flex flex-col items-center gap-8">
       <div className="flex-1 w-full flex flex-col justify-center items-center gap-4">
         <CardButton
           onClick={() => setSelected("individual")}
@@ -32,7 +32,7 @@ const AccountType = ({ setSelected, selected, onButtonClick }) => {
         </CardButton>
       </div>
 
-      <div className="w-full flex justify-end items-center gap-2">
+      <div className="w-full flex justify-end items-center p-2">
         <button
           disabled={selected ? false : true}
           onClick={onButtonClick}
@@ -41,7 +41,7 @@ const AccountType = ({ setSelected, selected, onButtonClick }) => {
           Next
         </button>
       </div>
-    </div>
+    </di>
   );
 };
 

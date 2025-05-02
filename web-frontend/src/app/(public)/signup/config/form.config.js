@@ -1,5 +1,5 @@
 export const getFormConfig = ({ step, onSubmit, onCancel }) => {
-  let config = {
+  let formConfig = {
     title: "Account Type",
     buttons: {
       submit: { placeholder: step < 5 ? "Next" : "Confirm", fn: onSubmit },
@@ -12,16 +12,32 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
       },
     },
   };
+
+  let detailsConfig = {
+    organization: {
+      name: { value: "Company Name" },
+      email: { value: "Email" },
+      phone: { value: "Phone", format: (text) => text },
+    },
+    user: {
+      firstname: { value: "First Name" },
+      middlename: { value: "Middle Name" },
+      lastname: { value: "Last Name" },
+      username: { value: "Username" },
+      email: { value: "Email" },
+      phone: { value: "Phone", format: (text) => text },
+    },
+  };
   try {
     switch (step) {
       case 1:
-        config.title = "Organization Details";
-        config.fields = [
+        formConfig.title = "Organization Details";
+        formConfig.fields = [
           { key: "organization.name", type: "text", placeholder: "Company Name" },
           { key: "organization.email", type: "text", placeholder: "Company Email" },
           { key: "organization.phone", type: "text", placeholder: "Company Phone (Optional)" },
         ];
-        config.layout = [
+        formConfig.layout = [
           [{ key: "organization.name" }],
           [{ key: "organization.email" }],
           [{ key: "organization.phone" }],
@@ -29,13 +45,13 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
         break;
 
       case 2:
-        config.title = "Account Details";
-        config.fields = [
+        formConfig.title = "Account Details";
+        formConfig.fields = [
           { key: "user.firstname", type: "text", placeholder: "First Name" },
           { key: "user.middlename", type: "text", placeholder: "Middle Name (Optional)" },
           { key: "user.lastname", type: "text", placeholder: "Last Name" },
         ];
-        config.layout = [
+        formConfig.layout = [
           [{ key: "user.firstname" }],
           [{ key: "user.middlename" }],
           [{ key: "user.lastname" }],
@@ -43,13 +59,13 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
         break;
 
       case 3:
-        config.title = "Account Details";
-        config.fields = [
+        formConfig.title = "Account Details";
+        formConfig.fields = [
           { key: "user.username", type: "text", placeholder: "Username" },
           { key: "user.email", type: "text", placeholder: "Email" },
           { key: "user.phone", type: "text", placeholder: "Phone (Optional)" },
         ];
-        config.layout = [
+        formConfig.layout = [
           [{ key: "user.username" }],
           [{ key: "user.email" }],
           [{ key: "user.phone" }],
@@ -57,8 +73,8 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
         break;
 
       case 4:
-        config.title = "Password & Security";
-        config.fields = [
+        formConfig.title = "Password & Security";
+        formConfig.fields = [
           {
             key: "user.password",
             type: "text",
@@ -70,14 +86,14 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
             placeholder: "Confirm Password",
           },
         ];
-        config.layout = [[{ key: "user.password" }], [{ key: "user.confirmpassword" }]];
+        formConfig.layout = [[{ key: "user.password" }], [{ key: "user.confirmpassword" }]];
         break;
 
       default:
         break;
     }
 
-    return config;
+    return { formConfig, detailsConfig };
   } catch (error) {
     console.error(error);
   }
