@@ -19,6 +19,7 @@ const renderDetails = (entity, entityName, config) => {
 };
 
 const ConfirmDetails = ({ values, config, onCancel, onConfirm }) => {
+  console.log("tesst");
   const { user, organization } = values;
   return (
     <div className="h-full w-full flex flex-col gap-2 overflow-hidden">
@@ -36,22 +37,6 @@ const ConfirmDetails = ({ values, config, onCancel, onConfirm }) => {
           <h2 className="text-lg font-semibold">Account Details</h2>
           {renderDetails(user, "user", config)}
         </div>
-      </div>
-      <div className="w-full flex justify-end items-center gap-2 p-2">
-        <button
-          type="button"
-          className="p-2 hover:cursor-pointer rounded-sm border disabled:border-gray-300 disabled:text-gray-400"
-          onClick={onCancel || undefined}
-        >
-          Back
-        </button>
-        <button
-          type="button"
-          className="p-2 hover:cursor-pointer rounded-sm border disabled:border-gray-300 disabled:text-gray-400"
-          onClick={onConfirm || undefined}
-        >
-          Confirm
-        </button>
       </div>
     </div>
   );

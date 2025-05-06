@@ -6,7 +6,7 @@ export const middleware = async (req) => {
   const res = NextResponse.next();
 
   if (!token) {
-    if (pathname !== "/register" && !pathname.startsWith("/register")) {
+    if (pathname !== "/signup" && !pathname.startsWith("/signup")) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
   }
@@ -14,14 +14,6 @@ export const middleware = async (req) => {
   if (token) {
     if (pathname === "/login") {
       return NextResponse.redirect(new URL("/dashboard", req.url));
-    }
-  }
-
-  if (pathname.startsWith("/register/")) {
-    const step = pathname.split("/")[2];
-
-    if (step !== "account") {
-      return NextResponse.redirect(new URL("/register", req.url));
     }
   }
 

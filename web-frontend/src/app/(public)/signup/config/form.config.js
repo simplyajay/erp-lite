@@ -1,16 +1,7 @@
+//config for Formv2
+
 export const getFormConfig = ({ step, onSubmit, onCancel }) => {
-  let formConfig = {
-    buttons: {
-      submit: { placeholder: "Next", fn: onSubmit },
-      cancel: {
-        placeholder: "Back",
-        fn: (context) => {
-          const values = context?.getValues?.();
-          onCancel?.(values);
-        },
-      },
-    },
-  };
+  let formConfig = {};
 
   let detailsConfig = {
     organization: {
@@ -29,6 +20,9 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
   };
   try {
     switch (step) {
+      case 0:
+        formConfig.title = "Account Type";
+        break;
       case 1:
         formConfig.title = "Organization Details";
         formConfig.fields = [
@@ -87,6 +81,8 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
         ];
         formConfig.layout = [[{ key: "user.password" }], [{ key: "user.confirmpassword" }]];
         break;
+      case 5:
+        formConfig.title = "Review Details";
 
       default:
         break;
