@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useFormHandler } from "./hooks/useFormHandler";
+import { useFormHandler } from "../hooks/useFormHandler";
 
 const Form = ({ values, config, loading, validationSchema }) => {
   const { register, handleSubmit, formState, clearErrors, reset, setError, getValues } = useForm({
@@ -37,7 +37,7 @@ const Form = ({ values, config, loading, validationSchema }) => {
           <span className="text-lg font-semibold">{config.title}</span>
         </div>
       )}
-      <div className="flex-1 flex flex-col w-full  overflow-auto justify-center p-4 gap-4 ">
+      <div className="flex-1 flex flex-col w-full overflow-auto justify-center p-4 gap-4 ">
         {config?.layout?.map((row, rowIndex) => (
           <div key={rowIndex} className=" flex gap-4">
             {row.map((col, colIndex) => {
