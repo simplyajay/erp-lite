@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Form from "@/components/forms/newForm/FormNew";
+import Form from "@/components/forms/v1/Form";
 import { updateSupplier } from "@/api/supplier";
 import { addSupplier } from "@/api/supplier";
 import {

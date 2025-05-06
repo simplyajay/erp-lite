@@ -1,8 +1,7 @@
 export const getFormConfig = ({ step, onSubmit, onCancel }) => {
   let formConfig = {
-    title: "Account Type",
     buttons: {
-      submit: { placeholder: step < 5 ? "Next" : "Confirm", fn: onSubmit },
+      submit: { placeholder: "Next", fn: onSubmit },
       cancel: {
         placeholder: "Back",
         fn: (context) => {
@@ -45,7 +44,7 @@ export const getFormConfig = ({ step, onSubmit, onCancel }) => {
         break;
 
       case 2:
-        formConfig.title = "Account Details";
+        formConfig.title = "User Information";
         formConfig.fields = [
           { key: "user.firstname", type: "text", placeholder: "First Name" },
           { key: "user.middlename", type: "text", placeholder: "Middle Name (Optional)" },
