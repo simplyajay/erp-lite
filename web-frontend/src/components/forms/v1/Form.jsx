@@ -29,13 +29,15 @@ const Form = ({ values, config, loading, validationSchema }) => {
   const { renderInput, renderButtons } = useFormHandler({ register, errors, clearErrors, loading });
   return (
     <form
-      className="h-full w-full flex flex-col overflow-hidden"
+      className="h-full w-full flex flex-col gap-4 overflow-hidden"
       onSubmit={handleSubmit((values) => submitFn(values))}
     >
-      <div className="flex justify-center items-center p-2 text-lg">
-        <span>{config.title ?? "Form Title"}</span>
-      </div>
-      <div className="flex-1 flex flex-col w-full overflow-auto border-gray-200 justify-center p-4 gap-4">
+      {config?.title && (
+        <div className="flex justify-center items-center p-2 text-lg">
+          <span className="text-lg font-semibold">{config.title}</span>
+        </div>
+      )}
+      <div className="flex-1 flex flex-col w-full  overflow-auto justify-center p-4 gap-4 ">
         {config?.layout?.map((row, rowIndex) => (
           <div key={rowIndex} className=" flex gap-4">
             {row.map((col, colIndex) => {
