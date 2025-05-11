@@ -1,8 +1,8 @@
 import * as Yup from "yup";
 
-export const getInitialValues = (type) => ({
-  organization: type === "organization" ? { name: "", email: "", phone: "" } : undefined,
-  user: {
+export const getInitialValues = (type) => {
+  const organization = { name: "", email: "", phone: "" };
+  const user = {
     username: "",
     firstname: "",
     middlename: "",
@@ -11,10 +11,26 @@ export const getInitialValues = (type) => ({
     phone: "",
     password: "",
     confirmpassword: "",
-  },
-});
+  };
 
-export const organizationSchema = Yup.object().shape({
+  try {
+    switch (type) {
+      case "organization":
+        return { ...organization, ...user };
+
+      case "individual":
+        return { ...user };
+
+      default:
+        return {};
+    }
+  } catch (error) {
+    console.error(error);
+    return values;
+  }
+};
+
+export const businessDetails = Yup.object().shape({
   name: Yup.string().required("Company name is required"),
   email: Yup.string().email("Enter a valid email address").required("Company email is required"),
   phone: Yup.string()
@@ -25,26 +41,27 @@ export const organizationSchema = Yup.object().shape({
     }),
 });
 
-export const detailSchema = Yup.object().shape({
+export const personalInfo = Yup.object().shape({
   firstname: Yup.string().required("First name is required"),
   middlename: Yup.string().optional(),
   lastname: Yup.string().required(" Last name is required"),
-});
-
-export const usernameSchema = Yup.object().shape({
-  username: Yup.string()
-    .required("Please enter your username")
-    .min(4, "Username should be atleast 4 characters.")
-    .matches(/^[a-zA-Z0-9]*$/, "Username should only contain letters and numbers")
-    .matches(/[a-zA-Z]/, "Username cannot be all numbers"),
   email: Yup.string().email("Enter a valid email").required("Email is required"),
   phone: Yup.string().optional(),
 });
 
-export const passwordSchema = Yup.object().shape({
+export const accountInfo = Yup.object().shape({
+  username: Yup.string()
+    .required("Please enter your username")
+    .min(4, "Username must be atleast 4 characters.")
+    .max(15, "Username must not exceed 15 characters")
+    .matches(/^[a-zA-Z0-9]*$/, "Username must only contain letters and numbers")
+    .matches(/[a-zA-Z]/, "Username cannot be all numbers"),
   password: Yup.string()
     .required("Please enter your password")
-    .min(8, "Password must be atleast 8 characters"),
+    .min(8, "Password must be atleast 8 characters")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(/[^a-zA-Z0-9]/, "Password must contain at least one special character"),
   confirmpassword: Yup.string()
     .required("Please confirm your password")
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
@@ -52,15 +69,13 @@ export const passwordSchema = Yup.object().shape({
 
 export const getValidationSchema = (step) => {
   switch (step) {
-    case 1:
-      return Yup.object().shape({ organization: organizationSchema });
     case 2:
-      return Yup.object().shape({ user: detailSchema });
+      return Yup.object().shape({ organization: businessDetails });
     case 3:
-      return Yup.object().shape({ user: usernameSchema });
+      return Yup.object().shape({ user: personalInfo });
     case 4:
-      return Yup.object().shape({ user: passwordSchema });
+      return Yup.object().shape({ user: accountInfo });
     default:
-      return {};
+      return Yup.object().shape({});
   }
 };

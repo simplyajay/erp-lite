@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useFormHandler } from "../hooks/useFormHandler";
+import { useFormHandler } from "./hooks/useFormHandler";
 
 const Form = ({ values, config, loading, validationSchema }) => {
   const { register, handleSubmit, formState, clearErrors, reset, setError, getValues } = useForm({
