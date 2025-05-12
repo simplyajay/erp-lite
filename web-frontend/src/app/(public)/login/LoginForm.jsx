@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { signIn } from "@/api/auth";
 import { ClipLoader } from "react-spinners";
 import { ButtonConfirmBlueLight } from "@/components/button/CustomButtons";
-import { loginSchema } from "@/utils/schema/register.validationSchema";
+//import { loginSchema } from "@/utils/schema/register.validationSchema";
 import { EyeIcon, EyeOffIcon } from "@/components/icons/Icons";
 
 const values = { username: "", password: "" };

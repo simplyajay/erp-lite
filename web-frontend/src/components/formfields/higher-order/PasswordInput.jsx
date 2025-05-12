@@ -6,11 +6,12 @@ import { get } from "lodash";
 
 const withPasswordInput = (Component) => (props) => {
   const [showPassword, setShowPassword] = useState(false);
-  const { field, register, handleFocus, errors } = props;
+  const { field, register, handleFocus, errors, disabled } = props;
   const error = get(errors, field.key);
 
   const fieldProps = {
     ...props,
+    autocomplete: "off",
     field: {
       ...field,
       type: showPassword ? "text" : "password",
@@ -30,8 +31,10 @@ const withPasswordInput = (Component) => (props) => {
         <Component {...fieldProps} className="pr-12" />
 
         <button
+          tabIndex={-1}
+          disabled={disabled}
           type="button"
-          className="absolute inset-y-0   right-0 flex items-center p-2 border-l border-gray-300 text-gray-500 cursor-pointer"
+          className="absolute inset-y-0 right-0 flex items-center p-2 border-l border-gray-400 text-gray-500 cursor-pointer disabled:cursor-default"
           onClick={(e) => {
             e.preventDefault();
             setShowPassword((prev) => !prev);

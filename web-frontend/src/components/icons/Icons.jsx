@@ -2,7 +2,12 @@ import React from "react";
 
 export const HomeIcon = (props) => {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" height="0.7em" width="0.7em" {...props}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
       <path
         fillRule="evenodd"
         d="M11.03 2.59a1.5 1.5 0 011.94 0l7.5 6.363a1.5 1.5 0 01.53 1.144V19.5a1.5 1.5 0 01-1.5 1.5h-5.75a.75.75 0 01-.75-.75V14h-2v6.25a.75.75 0 01-.75.75H4.5A1.5 1.5 0 013 19.5v-9.403c0-.44.194-.859.53-1.144l7.5-6.363zM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 01.75-.75h3.5a.75.75 0 01.75.75v6.25h5v-9.403L12 3.734z"
@@ -11,9 +16,30 @@ export const HomeIcon = (props) => {
   );
 };
 
+export const HomeIconSolid = (props) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1024 1024"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
+      <path
+        fill="currentColor"
+        d="M946.5 505L534.6 93.4a31.93 31.93 0 0 0-45.2 0L77.5 505c-12 12-18.8 28.3-18.8 45.3c0 35.3 28.7 64 64 64h43.4V908c0 17.7 14.3 32 32 32H448V716h112v224h265.9c17.7 0 32-14.3 32-32V614.3h43.4c17 0 33.3-6.7 45.3-18.8c24.9-25 24.9-65.5-.1-90.5"
+      />
+    </svg>
+  );
+};
+
 export const ProductIcon = (props) => {
   return (
-    <svg fill="currentColor" viewBox="0 0 16 17" height="0.7em" width="0.7em" {...props}>
+    <svg
+      fill="currentColor"
+      viewBox="0 0 16 17"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
       <path d="M8.186 1.113a.5.5 0 00-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 011.114 0l7.129 2.852A.5.5 0 0116 3.5v8.662a1 1 0 01-.629.928l-7.185 2.874a.5.5 0 01-.372 0L.63 13.09a1 1 0 01-.63-.928V3.5a.5.5 0 01.314-.464L7.443.184z" />
     </svg>
   );
@@ -28,8 +54,7 @@ export const SupplierIcon = (props) => {
       strokeLinejoin="round"
       strokeWidth={1.5}
       viewBox="0 0 24 24"
-      height="0.7em"
-      width="0.7em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path stroke="none" d="M0 0h24v24H0z" />
@@ -42,7 +67,12 @@ export const SupplierIcon = (props) => {
 
 export const DocumentIcon = (props) => {
   return (
-    <svg viewBox="0 0 512 512" fill="currentColor" height="0.7em" width="0.7em" {...props}>
+    <svg
+      viewBox="0 0 512 512"
+      fill="currentColor"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
       <path
         fill="none"
         stroke="currentColor"
@@ -71,8 +101,7 @@ export const PurchaseIcon = (props) => {
       strokeLinejoin="round"
       strokeWidth={2}
       viewBox="0 0 24 24"
-      height="0.7em"
-      width="0.7em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M9 21 A1 1 0 0 1 8 22 A1 1 0 0 1 7 21 A1 1 0 0 1 9 21 z" />
@@ -87,9 +116,8 @@ export const UserIcon = (props) => {
     <svg
       viewBox="0 0 480 480"
       fill="currentColor"
-      height="0.7em"
-      width="0.7em"
       strokeWidth={1.5}
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M258.9 48C141.92 46.42 46.42 141.92 48 258.9c1.56 112.19 92.91 203.54 205.1 205.1 117 1.6 212.48-93.9 210.88-210.88C462.44 140.91 371.09 49.56 258.9 48zm126.42 327.25a4 4 0 01-6.14-.32 124.27 124.27 0 00-32.35-29.59C321.37 329 289.11 320 256 320s-65.37 9-90.83 25.34a124.24 124.24 0 00-32.35 29.58 4 4 0 01-6.14.32A175.32 175.32 0 0180 259c-1.63-97.31 78.22-178.76 175.57-179S432 158.81 432 256a175.32 175.32 0 01-46.68 119.25z" />
@@ -107,8 +135,7 @@ export const SettingsIcon = (props) => {
       strokeLinejoin="round"
       strokeWidth={1.5}
       viewBox="0 0 24 24"
-      height="0.7em"
-      width="0.7em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z" />
@@ -122,9 +149,8 @@ export const LogoutIcon = (props) => {
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
-      height="0.7em"
-      width="0.7em"
       strokeWidth={1.5}
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M2 12l5 4v-3h9v-2H7V8z" />
@@ -133,9 +159,29 @@ export const LogoutIcon = (props) => {
   );
 };
 
+export const LogInIcon = (props) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+    >
+      <path
+        fill="currentColor"
+        d="M12 21v-2h7V5h-7V3h7q.825 0 1.413.588T21 5v14q0 .825-.587 1.413T19 21zm-2-4l-1.375-1.45l2.55-2.55H3v-2h8.175l-2.55-2.55L10 7l5 5z"
+      />
+    </svg>
+  );
+};
+
 export const SaleIcon = (props) => {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" height="0.7em" width="0.7em" {...props}>
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
       <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8z" />
       <path d="M12 11c-2 0-2-.63-2-1s.7-1 2-1 1.39.64 1.4 1h2A3 3 0 0013 7.12V6h-2v1.09C9 7.42 8 8.71 8 10c0 1.12.52 3 4 3 2 0 2 .68 2 1s-.62 1-2 1c-1.84 0-2-.86-2-1H8c0 .92.66 2.55 3 2.92V18h2v-1.08c2-.34 3-1.63 3-2.92 0-1.12-.52-3-4-3z" />
     </svg>
@@ -144,7 +190,12 @@ export const SaleIcon = (props) => {
 
 export const MenuFoldIcon = (props) => {
   return (
-    <svg viewBox="0 0 1024 1024" fill="currentColor" height="0.7em" width="0.7em" {...props}>
+    <svg
+      viewBox="0 0 1024 1024"
+      fill="currentColor"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
       <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM142.4 642.1L298.7 519a8.84 8.84 0 000-13.9L142.4 381.9c-5.8-4.6-14.4-.5-14.4 6.9v246.3a8.9 8.9 0 0014.4 7z" />
     </svg>
   );
@@ -152,7 +203,12 @@ export const MenuFoldIcon = (props) => {
 
 export const MenuUnfoldIcon = (props) => {
   return (
-    <svg viewBox="0 0 1024 1024" fill="currentColor" height="0.7em" width="0.7em" {...props}>
+    <svg
+      viewBox="0 0 1024 1024"
+      fill="currentColor"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
       <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 000 13.8z" />
     </svg>
   );
@@ -160,7 +216,12 @@ export const MenuUnfoldIcon = (props) => {
 
 export const PreviousIcon = (props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 320 512"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
       <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
     </svg>
   );
@@ -168,7 +229,12 @@ export const PreviousIcon = (props) => {
 
 export const NextIcon = (props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" {...props}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 320 512"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+      {...props}
+    >
       <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
     </svg>
   );
@@ -179,8 +245,7 @@ export const ChevronRight = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 320 512"
-      width="0.8em"
-      height="0.8em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z" />
@@ -193,8 +258,7 @@ export const ChevronLeft = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 320 512"
-      width="0.8em"
-      height="0.8em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z" />
@@ -207,8 +271,7 @@ export const ChevronDown = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
-      width="0.8em"
-      height="0.8em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z" />
@@ -221,8 +284,7 @@ export const ChevronUp = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
-      width="0.8em"
-      height="0.8em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" />
@@ -236,8 +298,7 @@ export const EditIcon = (props) => {
       fill="#427ae3"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
-      width="1.2em"
-      height="1.2em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152L0 424c0 48.6 39.4 88 88 88l272 0c48.6 0 88-39.4 88-88l0-112c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 112c0 22.1-17.9 40-40 40L88 464c-22.1 0-40-17.9-40-40l0-272c0-22.1 17.9-40 40-40l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 64z" />
@@ -251,8 +312,7 @@ export const DeleteIcon = (props) => {
       fill="#e8403c"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
-      width="1.2em"
-      height="1.2em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M170.5 51.6L151.5 80l145 0-19-28.4c-1.5-2.2-4-3.6-6.7-3.6l-93.7 0c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80 368 80l48 0 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-8 0 0 304c0 44.2-35.8 80-80 80l-224 0c-44.2 0-80-35.8-80-80l0-304-8 0c-13.3 0-24-10.7-24-24S10.7 80 24 80l8 0 48 0 13.8 0 36.7-55.1C140.9 9.4 158.4 0 177.1 0l93.7 0c18.7 0 36.2 9.4 46.6 24.9zM80 128l0 304c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-304L80 128zm80 64l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
@@ -264,13 +324,11 @@ export const Magnifying = (props) => {
   return (
     <svg
       viewBox="0 0 1024 1024"
-      className="icon"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       fill="#000000"
       stroke="#000000"
-      width="1.2em"
-      height="1.2em"
+      className={`icon h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path
@@ -284,11 +342,9 @@ export const Magnifying = (props) => {
 export const Close = (props) => {
   return (
     <svg
-      className="w-6 h-6 text-gray-800 dark:text-white"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       fill="none"
       viewBox="0 0 24 24"
       {...props}
@@ -304,8 +360,7 @@ export const CaretDown = (props) => {
       fill="#000000"
       viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M24 11.305l-7.997 11.39L8 11.305z"></path>
@@ -319,8 +374,7 @@ export const CaretUp = (props) => {
       fill="#000000"
       viewBox="0 0 32 32"
       xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M8 20.695l7.997-11.39L24 20.695z"></path>
@@ -333,8 +387,7 @@ export const Plus = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
@@ -347,8 +400,7 @@ export const ExternalLinkIcon = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l82.7 0L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3l0 82.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160c0-17.7-14.3-32-32-32L320 0zM80 32C35.8 32 0 67.8 0 112L0 432c0 44.2 35.8 80 80 80l320 0c44.2 0 80-35.8 80-80l0-112c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 112c0 8.8-7.2 16-16 16L80 448c-8.8 0-16-7.2-16-16l0-320c0-8.8 7.2-16 16-16l112 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L80 32z" />
@@ -364,8 +416,7 @@ export const DoubleCaretDownIcon = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path
@@ -387,8 +438,7 @@ export const DoubleCaretUpIcon = (props) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path
@@ -412,8 +462,7 @@ export const EyeIcon = (props) => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>{" "}
@@ -432,8 +481,7 @@ export const EyeOffIcon = (props) => {
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"></path>
@@ -448,8 +496,7 @@ export const MultiUserIcon = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 640 512"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192l42.7 0c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0L21.3 320C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7l42.7 0C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3l-213.3 0zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352l117.3 0C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7l-330.7 0c-14.7 0-26.7-11.9-26.7-26.7z" />
@@ -462,8 +509,7 @@ export const SingleUserIcon = (props) => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
-      width="1em"
-      height="1em"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
       {...props}
     >
       <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512l388.6 0c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304l-91.4 0z" />
@@ -473,7 +519,11 @@ export const SingleUserIcon = (props) => {
 
 export const CheckIcon = (props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={`h-[1em] w-[1em] text-current ${props.className ?? ""}`}
+    >
       <path
         fill="none"
         stroke="currentColor"

@@ -1,7 +1,6 @@
 import * as Yup from "yup";
 
-export const getInitialValues = (type) => {
-  const organization = { name: "", email: "", phone: "" };
+export const getDefaultValues = () => {
   const user = {
     username: "",
     firstname: "",
@@ -10,24 +9,29 @@ export const getInitialValues = (type) => {
     email: "",
     phone: "",
     password: "",
-    confirmpassword: "",
+  };
+  const organization = {
+    name: "",
+    email: "",
+    phone: "",
   };
 
-  try {
-    switch (type) {
-      case "organization":
-        return { ...organization, ...user };
+  return { user, organization };
+};
 
-      case "individual":
-        return { ...user };
-
-      default:
-        return {};
-    }
-  } catch (error) {
-    console.error(error);
-    return values;
-  }
+export const validationMap = {
+  2: {
+    entity: "organization",
+    fields: ["organization.email", "organization.name", "organization.phone"],
+  },
+  3: {
+    entity: "user",
+    fields: ["user.firstname", "user.middlename", "user.lastname", "user.phone", "user.email"],
+  },
+  4: {
+    entity: "user",
+    fields: ["user.username", "user.password"],
+  },
 };
 
 export const businessDetails = Yup.object().shape({
@@ -67,8 +71,14 @@ export const accountInfo = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
+export const accountType = Yup.object().shape({
+  accountType: Yup.string().required("Please select an account type."),
+});
+
 export const getValidationSchema = (step) => {
   switch (step) {
+    case 1:
+      return accountType;
     case 2:
       return Yup.object().shape({ organization: businessDetails });
     case 3:

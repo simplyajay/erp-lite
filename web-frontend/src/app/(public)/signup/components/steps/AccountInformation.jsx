@@ -1,8 +1,16 @@
+"use client";
 import React from "react";
 import TextInput from "@/components/formfields/higher-order/TextInput";
 import PasswordInput from "@/components/formfields/higher-order/PasswordInput";
+import { motion } from "framer-motion";
+import { fadeTransitionv1 } from "@/components/motion/transitions";
+import { useFormContext } from "react-hook-form";
+import useRegistrationUiStore from "@/store/useRegistraionUiStore";
 
-const AccountInformation = ({ register, clearErrors, errors }) => {
+const AccountInformation = () => {
+  const loading = useRegistrationUiStore((state) => state.loading);
+  const { formState, register, clearErrors } = useFormContext();
+  const { errors } = formState;
   const fields = [
     { key: "user.username", label: "Username", placeholder: "yourusername123" },
     {
@@ -19,7 +27,7 @@ const AccountInformation = ({ register, clearErrors, errors }) => {
     },
   ];
   return (
-    <div className="h-full w-full flex flex-col gap-10">
+    <motion.div className="h-full w-full flex flex-col gap-10" {...fadeTransitionv1}>
       <div className="h-full w-full flex flex-col gap-8">
         <div className="w-full flex flex-col items-start justify-center gap-2 ">
           <span className="text-body-lg font-semibold">Account Setup</span>
@@ -30,6 +38,8 @@ const AccountInformation = ({ register, clearErrors, errors }) => {
             field.key === "user.username" ? (
               <TextInput
                 key={index}
+                autoComplete="off"
+                disabled={loading}
                 field={field}
                 register={register}
                 errors={errors}
@@ -38,6 +48,7 @@ const AccountInformation = ({ register, clearErrors, errors }) => {
             ) : (
               <PasswordInput
                 key={index}
+                disabled={loading}
                 field={field}
                 register={register}
                 errors={errors}
@@ -56,7 +67,7 @@ const AccountInformation = ({ register, clearErrors, errors }) => {
           </ul>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
