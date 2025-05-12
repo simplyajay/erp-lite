@@ -1,10 +1,12 @@
 import React from "react";
 import CardButton from "@/components/button/CardButton";
 import { SingleUserIcon, MultiUserIcon } from "@/components/icons/Icons";
+import { motion } from "framer-motion";
+import { fadeTransitionv1 } from "@/components/motion/transitions";
 
 const AccountType = ({ selected, setSelected }) => {
   return (
-    <div className="w-full h-full flex flex-col gap-10">
+    <motion.div className="w-full h-full flex flex-col gap-10" {...fadeTransitionv1}>
       <div className="w-full flex flex-col items-start justify-center gap-2 ">
         <span className="text-body-lg font-semibold">Account Type</span>
         <span className="text-body-sm">Select your account type</span>
@@ -35,7 +37,7 @@ const AccountType = ({ selected, setSelected }) => {
           </CardButton>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

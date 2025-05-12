@@ -30,6 +30,7 @@ const withPasswordInput = (Component) => (props) => {
         <Component {...fieldProps} className="pr-12" />
 
         <button
+          tabIndex={-1}
           type="button"
           className="absolute inset-y-0   right-0 flex items-center p-2 border-l border-gray-300 text-gray-500 cursor-pointer"
           onClick={(e) => {

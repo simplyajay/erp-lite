@@ -1,6 +1,8 @@
 import React from "react";
 import TextInput from "@/components/formfields/higher-order/TextInput";
 import PasswordInput from "@/components/formfields/higher-order/PasswordInput";
+import { motion } from "framer-motion";
+import { fadeTransitionv1 } from "@/components/motion/transitions";
 
 const AccountInformation = ({ register, clearErrors, errors }) => {
   const fields = [
@@ -19,7 +21,7 @@ const AccountInformation = ({ register, clearErrors, errors }) => {
     },
   ];
   return (
-    <div className="h-full w-full flex flex-col gap-10">
+    <motion.div className="h-full w-full flex flex-col gap-10" {...fadeTransitionv1}>
       <div className="h-full w-full flex flex-col gap-8">
         <div className="w-full flex flex-col items-start justify-center gap-2 ">
           <span className="text-body-lg font-semibold">Account Setup</span>
@@ -56,7 +58,7 @@ const AccountInformation = ({ register, clearErrors, errors }) => {
           </ul>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

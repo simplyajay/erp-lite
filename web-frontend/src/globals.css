@@ -31,15 +31,19 @@
   }
 
   .btn {
-    @apply min-w-[100px] rounded-sm px-4 py-2 transition-colors duration-300 cursor-pointer;
+    @apply min-w-[100px] flex items-center justify-center gap-2 rounded-sm px-4 py-2 transition-colors duration-300 cursor-pointer;
+  }
+
+  .btn-primary-transparent {
+    @apply hover:text-blue-400 focus:ring-0 focus:outline-none focus:text-blue-400;
   }
 
   .btn-primary-solid {
-    @apply bg-[#a6ccfd] hover:bg-[#8dbdfc];
+    @apply bg-[#a6ccfd] hover:bg-[#8dbdfc] focus:ring-2 focus:ring-blue-300 focus:outline-none;
   }
 
   .btn-secondary-solid {
-    @apply bg-[#e2e9ec] hover:bg-[#d8dde2];
+    @apply bg-[#e2e9ec] hover:bg-[#d8dde2] focus:ring-2 focus:ring-gray-300 focus:outline-none;
   }
 }
 
@@ -54,7 +58,7 @@
 
   .scrollbar-thin::-webkit-scrollbar {
     width: 3px;
-    height: 3px;
+    height: 4px;
   }
 
   .scrollbar-thin::-webkit-scrollbar-track {

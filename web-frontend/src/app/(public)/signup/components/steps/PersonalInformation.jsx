@@ -1,5 +1,7 @@
 import React from "react";
 import TextInput from "@/components/formfields/higher-order/TextInput";
+import { motion } from "framer-motion";
+import { fadeTransitionv1 } from "@/components/motion/transitions";
 
 const PersonalInformation = ({ register, clearErrors, errors }) => {
   const fields = [
@@ -10,7 +12,7 @@ const PersonalInformation = ({ register, clearErrors, errors }) => {
     { key: "user.email", label: "Email", placeholder: "you@example.com" },
   ];
   return (
-    <div className="w-full h-full flex flex-col gap-10">
+    <motion.div className="w-full h-full flex flex-col gap-10" {...fadeTransitionv1}>
       <div className="w-full flex flex-col items-start justify-center gap-2 ">
         <span className="text-body-lg font-semibold">Personal Information</span>
         <span className="text-body-sm">Please provide your personal details</span>
@@ -32,7 +34,7 @@ const PersonalInformation = ({ register, clearErrors, errors }) => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

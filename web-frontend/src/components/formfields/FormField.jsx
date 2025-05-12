@@ -10,7 +10,7 @@ export const FormField = ({ field, register, errors, onFocus, className }) => {
   const props = {
     ...register,
     id: field.key,
-    className: `${className} input text-body-sm ${error ? "input-error" : ""}`,
+    className: `${className ?? ""} input text-body-sm ${error ? "input-error" : ""}`,
     placeholder: field.placeholder || "",
     onFocus,
   };

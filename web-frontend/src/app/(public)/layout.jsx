@@ -2,7 +2,7 @@ import React from "react";
 
 const PublicLayout = ({ children }) => {
   return (
-    <div className="w-full h-full flex flex-col overflow-auto">
+    <div id="root-public" className="w-full h-full flex flex-col overflow-auto">
       <nav className="w-full max-h-14 p-2 flex justify-center items-center border-b border-gray-300 nav-public">
         this is a header
       </nav>

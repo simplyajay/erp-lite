@@ -1,18 +1,9 @@
-"use client";
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getInitialValues, getValidationSchema } from "../util/form.util";
-import Buttons from "./Buttons";
-import AccountType from "./steps/AccountType";
-import BusinessDetails from "./steps/BusinessDetails";
-import PersonalInformation from "./steps/PersonalInformation";
-import AccountInformation from "./steps/AccountInformation";
-import ReviewInformation from "./steps/ReviewInformation";
-import Success from "./steps/Success";
-import StepIndicator from "./StepIndicator";
 
-const RegistrationForm = () => {
+const useRegistration = () => {
   const [accountType, setAccountType] = useState(undefined);
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -21,25 +12,13 @@ const RegistrationForm = () => {
 
   const validationSchema = getValidationSchema(currentStep);
 
-  const { register, formState, clearErrors, reset, setError, getValues, handleSubmit } = useForm({
+  const { errors, ...formMethods } = useForm({
     mode: "onSubmit",
     reValidateMode: "onBlur",
     resolver: yupResolver(validationSchema),
     defaultValues: getInitialValues(accountType),
     shouldFocusError: false,
   });
-
-  useEffect(() => {
-    if (currentStep === 1) {
-      reset();
-    }
-    const container = document.getElementById("root-public");
-    if (container) {
-      container.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [reset, currentStep]);
-
-  const { errors } = formState;
 
   const handlePageChange = (direction) => {
     setCurrentStep((prev) => {
@@ -59,10 +38,9 @@ const RegistrationForm = () => {
 
   const handleNext = () => currentStep < MAX_STEP && handlePageChange("next");
 
-  const handleValidate = async () => {
+  const handleValidate = async ({ values }) => {
     try {
       setLoading(true);
-      setFormData((prev) => ({ ...prev, ...values }));
 
       if (currentStep === 2 || currentStep === 4) {
         const { organization, user } = values;
@@ -86,42 +64,15 @@ const RegistrationForm = () => {
     }
   };
 
-  const stepsComponents = {
-    1: AccountType,
-    2: BusinessDetails,
-    3: PersonalInformation,
-    4: AccountInformation,
-    5: ReviewInformation,
+  return {
+    handleValidate,
+    handlePrev,
+    handleNext,
+    formMethods,
+    currentStep,
+    accountType,
+    setAccountType,
   };
-
-  const Step = stepsComponents[currentStep];
-
-  return (
-    <div className="card-container gap-10 justify-start items-center">
-      <StepIndicator currentStep={currentStep} accountType={accountType} />
-      {currentStep === MAX_STEP ? (
-        <Success />
-      ) : (
-        <form
-          className="flex-1 w-full flex flex-col gap-10"
-          onSubmit={handleSubmit((values) => {
-            handleNext();
-          })}
-        >
-          <Step
-            currentStep={currentStep}
-            selected={accountType}
-            setSelected={setAccountType}
-            register={register}
-            clearErrors={clearErrors}
-            errors={errors}
-            getValues={getValues}
-          />
-          <Buttons step={currentStep} handleCancel={handlePrev} type={accountType} />
-        </form>
-      )}
-    </div>
-  );
 };
 
-export default RegistrationForm;
+export default useRegistration;

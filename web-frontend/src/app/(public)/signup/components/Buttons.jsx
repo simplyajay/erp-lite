@@ -2,7 +2,10 @@ import React from "react";
 
 const Buttons = ({ step, handleCancel }) => {
   const MIN_STEP = 1;
-  const MAX_STEP = 5;
+  const MAX_STEP = 6;
+
+  if (step === MAX_STEP) return;
+
   return (
     <div className="w-full flex flex-col justify-around gap-4 ">
       <div
@@ -21,7 +24,7 @@ const Buttons = ({ step, handleCancel }) => {
         )}
 
         <button type="submit" className="btn btn-primary-solid text-body">
-          {step === MAX_STEP ? "Submit" : "Next"}
+          {step === MAX_STEP - 1 ? "Submit" : "Next"}
         </button>
       </div>
     </div>
