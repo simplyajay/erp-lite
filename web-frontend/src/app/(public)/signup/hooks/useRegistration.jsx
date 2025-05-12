@@ -1,33 +1,70 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { getInitialValues, getValidationSchema } from "../util/form.util";
+import { getDefaultValues, getValidationSchema } from "../util/form.util";
+import { validateFields } from "@/api/auth";
+import { validationMap } from "../util/form.util";
+import useRegistrationUiStore from "@/store/useRegistraionUiStore";
 
 const useRegistration = () => {
-  const [accountType, setAccountType] = useState(undefined);
   const [currentStep, setCurrentStep] = useState(1);
+  const setLoading = useRegistrationUiStore((state) => state.setLoading);
 
   const MIN_STEP = 1;
   const MAX_STEP = 6;
 
   const validationSchema = getValidationSchema(currentStep);
 
-  const { errors, ...formMethods } = useForm({
+  const formMethods = useForm({
     mode: "onSubmit",
     reValidateMode: "onBlur",
     resolver: yupResolver(validationSchema),
-    defaultValues: getInitialValues(accountType),
+    defaultValues: { accountType: "" },
     shouldFocusError: false,
   });
 
+  const { reset, getValues, setError, watch } = formMethods;
+
+  const scrollToTop = () => {
+    setTimeout(() => {
+      const container = document.getElementById("root-public");
+      if (container) {
+        container.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }, 0);
+  };
+
+  const accountType = watch("accountType");
+
+  useEffect(() => {
+    const { user, organization } = getDefaultValues;
+    if (!accountType) return;
+    const base = {
+      accountType,
+      ...user,
+    };
+    reset({
+      ...base,
+      ...(accountType === "business" ? organization : {}),
+    });
+  }, [accountType]);
+
+  useEffect(() => {
+    if (currentStep === 1) {
+      reset();
+    }
+    scrollToTop();
+  }, [reset, currentStep]);
+
   const handlePageChange = (direction) => {
+    const accountType = getValues("accountType");
     setCurrentStep((prev) => {
       if (direction === "next") {
-        if (accountType === "individual" && currentStep === 1) return prev + 2; //skip 1 stem if acc accountType is individual
+        if (accountType === "individual" && prev === 1) return prev + 2; //skip 1 step if acc accountType is individual
         return Math.min(prev + 1, MAX_STEP);
       }
       if (direction === "prev") {
-        if (accountType === "individual" && currentStep === 3) return prev - 2;
+        if (accountType === "individual" && prev === 3) return prev - 2;
         return Math.max(prev - 1, MIN_STEP);
       }
       return prev;
@@ -38,19 +75,25 @@ const useRegistration = () => {
 
   const handleNext = () => currentStep < MAX_STEP && handlePageChange("next");
 
-  const handleValidate = async ({ values }) => {
+  const handleValidate = async () => {
+    scrollToTop();
+
     try {
       setLoading(true);
 
-      if (currentStep === 2 || currentStep === 4) {
-        const { organization, user } = values;
-        const entity = currentStep === 1 ? "organization" : "user";
-        const currentValues = currentStep === 1 && organization ? organization : user;
-        const res = await validateFields(currentValues, { params: { entity } });
+      const config = validationMap[currentStep];
+      if (config) {
+        const currentValues = config.fields.reduce((acc, field) => {
+          const fieldValue = getValues(field);
+          const key = field.split(".").pop();
+          acc[key] = fieldValue;
+          return acc;
+        }, {});
+        const res = await validateFields(currentValues, { params: { entity: config.entity } });
+        //await new Promise((resolve) => setTimeout(resolve, 5000));
         if (!res.ok && res.status === 409) {
-          console.log("not ok");
           const key = Object.keys(res.data)[0]; // access key inside keyValue from error
-          setError(`${entity}.${key}`, { type: "manual", message: res.message });
+          setError(`${config.entity}.${key}`, { type: "manual", message: res.message });
           setLoading(false);
           return;
         }
@@ -64,14 +107,16 @@ const useRegistration = () => {
     }
   };
 
+  const handleRegister = async () => {};
+
   return {
     handleValidate,
     handlePrev,
     handleNext,
     formMethods,
     currentStep,
-    accountType,
-    setAccountType,
+    MIN_STEP,
+    MAX_STEP,
   };
 };
 

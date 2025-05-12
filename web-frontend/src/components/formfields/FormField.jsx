@@ -4,13 +4,23 @@ const get = (obj, path) => {
   return path.split(".").reduce((acc, part) => acc && acc[part], obj);
 };
 
-export const FormField = ({ field, register, errors, onFocus, className }) => {
+export const FormField = ({
+  field,
+  register,
+  errors,
+  onFocus,
+  className,
+  disabled,
+  autoComplete,
+}) => {
   const error = get(errors, field.key);
 
   const props = {
     ...register,
+    disabled,
+    autoComplete: autoComplete,
     id: field.key,
-    className: `${className ?? ""} input text-body-sm ${error ? "input-error" : ""}`,
+    className: `${className ?? ""} bg-white input text-body-sm ${error ? "input-error" : ""}`,
     placeholder: field.placeholder || "",
     onFocus,
   };

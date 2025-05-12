@@ -40,8 +40,7 @@ const renderDetails = (entity, entityName, config) => {
   );
 };
 
-const ReviewInformation = ({ getValues }) => {
-  const values = getValues();
+const ReviewInformation = ({ values, onCancel, onSubmit }) => {
   const { user, organization } = values;
   return (
     <motion.div className="h-full w-full flex flex-col gap-10" {...fadeTransitionv1}>
@@ -66,6 +65,14 @@ const ReviewInformation = ({ getValues }) => {
             {renderDetails(user, "user", detailsConfig)}
           </div>
         </div>
+      </div>
+      <div className="flex justify-between gap-4">
+        <button className="btn btn-secondary-solid text-body" onClick={onCancel}>
+          Previous
+        </button>
+        <button className="btn btn-primary-solid text-body" onClick={onSubmit}>
+          Submit
+        </button>
       </div>
     </motion.div>
   );

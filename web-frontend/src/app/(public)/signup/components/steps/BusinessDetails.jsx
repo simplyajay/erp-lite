@@ -1,9 +1,15 @@
+"use client";
 import React from "react";
 import TextInput from "@/components/formfields/higher-order/TextInput";
 import { motion } from "framer-motion";
 import { fadeTransitionv1 } from "@/components/motion/transitions";
+import { useFormContext } from "react-hook-form";
+import useRegistrationUiStore from "@/store/useRegistraionUiStore";
 
-const BusinessDetails = ({ register, clearErrors, errors }) => {
+const BusinessDetails = () => {
+  const loading = useRegistrationUiStore((state) => state.loading);
+  const { formState, register, clearErrors } = useFormContext();
+  const { errors } = formState;
   const fields = [
     { key: "organization.name", label: "Company Name", placeholder: "Company Inc." },
     { key: "organization.email", label: "Email", placeholder: "company@example.com" },
@@ -20,6 +26,8 @@ const BusinessDetails = ({ register, clearErrors, errors }) => {
         {fields.map((field, index) => (
           <TextInput
             key={index}
+            autoComplete={field.key === "organization.email" ? "off" : "on"}
+            disabled={loading}
             field={field}
             register={register}
             errors={errors}

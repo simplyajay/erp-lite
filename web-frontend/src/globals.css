@@ -16,7 +16,7 @@
 
 @layer components {
   .input {
-    @apply p-2 min-h-10 w-full rounded-md focus:ring-2 focus:ring-blue-100 focus:outline-none border border-gray-300;
+    @apply p-2 min-h-10 w-full rounded-md focus:ring-2 focus:ring-blue-100 focus:outline-none border border-gray-400;
   }
 
   .input-error {
@@ -27,11 +27,12 @@
     @apply h-full w-full p-10;
   }
   .card-container {
-    @apply w-full flex flex-col p-8 shadow-md rounded-md bg-white;
+    @apply w-full flex flex-col shadow-md rounded-md bg-white;
   }
 
   .btn {
-    @apply min-w-[100px] flex items-center justify-center gap-2 rounded-sm px-4 py-2 transition-colors duration-300 cursor-pointer;
+    @apply min-w-[100px] flex items-center justify-center gap-2
+     rounded-sm px-4 py-2 transition-colors duration-300 cursor-pointer disabled:cursor-default;
   }
 
   .btn-primary-transparent {
@@ -39,11 +40,11 @@
   }
 
   .btn-primary-solid {
-    @apply bg-[#a6ccfd] hover:bg-[#8dbdfc] focus:ring-2 focus:ring-blue-300 focus:outline-none;
+    @apply bg-[#a6ccfd] disabled:bg-[#a6ccfd] hover:bg-[#8dbdfc] focus:ring-2 focus:ring-blue-300 focus:outline-none;
   }
 
   .btn-secondary-solid {
-    @apply bg-[#e2e9ec] hover:bg-[#d8dde2] focus:ring-2 focus:ring-gray-300 focus:outline-none;
+    @apply bg-[#e2e9ec] disabled:bg-[#e2e9ec] hover:bg-[#d8dde2] focus:ring-2 focus:ring-gray-300 focus:outline-none;
   }
 }
 
