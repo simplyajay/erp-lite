@@ -37,16 +37,15 @@ const useRegistration = () => {
   const accountType = watch("accountType");
 
   useEffect(() => {
-    const { user, organization } = getDefaultValues;
+    const { user, organization } = getDefaultValues();
     if (!accountType) return;
     const base = {
       accountType,
-      ...user,
+      user,
     };
-    reset({
-      ...base,
-      ...(accountType === "business" ? organization : {}),
-    });
+
+    const newValues = { ...base, ...(accountType === "organization" && { organization }) };
+    reset(newValues);
   }, [accountType]);
 
   useEffect(() => {

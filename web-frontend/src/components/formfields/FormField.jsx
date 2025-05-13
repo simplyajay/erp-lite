@@ -8,10 +8,11 @@ export const FormField = ({
   field,
   register,
   errors,
-  onFocus,
   className,
   disabled,
   autoComplete,
+  onFocus,
+  onBlur,
 }) => {
   const error = get(errors, field.key);
 
@@ -23,6 +24,7 @@ export const FormField = ({
     className: `${className ?? ""} bg-white input text-body-sm ${error ? "input-error" : ""}`,
     placeholder: field.placeholder || "",
     onFocus,
+    onBlur,
   };
 
   const renderInput = () => {

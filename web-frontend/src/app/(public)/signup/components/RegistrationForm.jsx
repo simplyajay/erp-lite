@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
-import Buttons from "./Buttons";
+import Buttons from "./formElements/Buttons";
 import AccountType from "./steps/AccountType";
 import BusinessDetails from "./steps/BusinessDetails";
 import PersonalInformation from "./steps/PersonalInformation";
 import AccountInformation from "./steps/AccountInformation";
 import ReviewInformation from "./steps/ReviewInformation";
 import Success from "./steps/Success";
-import StepIndicator from "./StepIndicator";
+import StepIndicator from "./formElements/StepIndicator";
 import useRegistration from "../hooks/useRegistration";
 import { FormProvider } from "react-hook-form";
-import LoadingBar from "./LoadingBar";
+import LoadingBar from "./formElements/LoadingBar";
 import useRegistrationUiStore from "@/store/useRegistraionUiStore";
 
 const RegistrationForm = () => {

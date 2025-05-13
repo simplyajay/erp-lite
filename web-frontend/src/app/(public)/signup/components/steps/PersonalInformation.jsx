@@ -37,7 +37,7 @@ const PersonalInformation = () => {
               field={field}
               register={register}
               errors={errors}
-              handleFocus={clearErrors}
+              clearErrors={clearErrors}
             />
           </div>
         ))}

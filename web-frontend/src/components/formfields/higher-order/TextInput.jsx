@@ -3,13 +3,16 @@ import FormField from "../FormField";
 import { get } from "lodash";
 
 const withTextInput = (Component) => (props) => {
-  const { field, register, handleFocus, errors } = props;
+  const { field, register, clearErrors, errors } = props;
   const error = get(errors, field.key);
 
   const fieldProps = {
     ...props,
     register: register(field.key),
-    onFocus: () => handleFocus(field.key),
+    onFocus: (e) => {
+      clearErrors(field.key);
+      props.onFocus?.(e);
+    },
   };
 
   return (

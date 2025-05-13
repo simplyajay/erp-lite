@@ -6,7 +6,7 @@ import { get } from "lodash";
 
 const withPasswordInput = (Component) => (props) => {
   const [showPassword, setShowPassword] = useState(false);
-  const { field, register, handleFocus, errors, disabled } = props;
+  const { field, register, clearErrors, errors, disabled } = props;
   const error = get(errors, field.key);
 
   const fieldProps = {
@@ -17,7 +17,10 @@ const withPasswordInput = (Component) => (props) => {
       type: showPassword ? "text" : "password",
     },
     register: register(field.key),
-    onFocus: () => handleFocus(field.key),
+    onFocus: (e) => {
+      clearErrors(field.key);
+      props.onFocus?.(e);
+    },
   };
 
   return (

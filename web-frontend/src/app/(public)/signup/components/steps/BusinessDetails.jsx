@@ -31,7 +31,7 @@ const BusinessDetails = () => {
             field={field}
             register={register}
             errors={errors}
-            handleFocus={clearErrors}
+            clearErrors={clearErrors}
           />
         ))}
       </div>

@@ -4,8 +4,8 @@ import RegistrationForm from "./components/RegistrationForm";
 
 const RegistrationPage = () => {
   return (
-    <div className="main-container flex items-center justify-center ">
-      <div className="h-full w-[700px] flex flex-col justify-center items-center gap-4">
+    <div className="main-container flex items-start justify-center">
+      <div className="w-[700px] flex flex-col justify-start items-center gap-4">
         <RegistrationForm />
         <div className="w-full flex items-center">
           <div className="text-body-sm flex gap-1">

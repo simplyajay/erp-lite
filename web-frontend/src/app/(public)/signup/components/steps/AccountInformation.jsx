@@ -1,31 +1,47 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TextInput from "@/components/formfields/higher-order/TextInput";
 import PasswordInput from "@/components/formfields/higher-order/PasswordInput";
+import useRegistrationUiStore from "@/store/useRegistraionUiStore";
+import PasswordStrengthIndicator from "../formElements/PasswordStrengthIndicator";
 import { motion } from "framer-motion";
 import { fadeTransitionv1 } from "@/components/motion/transitions";
 import { useFormContext } from "react-hook-form";
-import useRegistrationUiStore from "@/store/useRegistraionUiStore";
+import { debounce } from "lodash";
 
 const AccountInformation = () => {
+  const [showIndicator, setShowIndicator] = useState(false);
   const loading = useRegistrationUiStore((state) => state.loading);
-  const { formState, register, clearErrors } = useFormContext();
+  const { formState, register, clearErrors, watch } = useFormContext();
   const { errors } = formState;
-  const fields = [
-    { key: "user.username", label: "Username", placeholder: "yourusername123" },
-    {
+  const password = watch("user.password");
+
+  const fields = {
+    username: { key: "user.username", label: "Username", placeholder: "yourusername123" },
+    password: {
       key: "user.password",
       label: "Password",
       placeholder: "Enter your password",
       type: "password",
     },
-    {
+    confirmpassword: {
       key: "user.confirmpassword",
       label: "Confirm Password",
       placeholder: "Re-enter your password",
       type: "password",
     },
-  ];
+  };
+
+  const handlePasswordChange = debounce(() => {
+    if (password && password.length > 0) {
+      setShowIndicator(true);
+    }
+  }, 100);
+
+  useEffect(() => {
+    handlePasswordChange();
+    return () => handlePasswordChange.cancel(); // Cleanup debounce on component unmount
+  }, [password]);
   return (
     <motion.div className="h-full w-full flex flex-col gap-10" {...fadeTransitionv1}>
       <div className="h-full w-full flex flex-col gap-8">
@@ -34,38 +50,39 @@ const AccountInformation = () => {
           <span className="text-body-sm">Create your login credentials</span>
         </div>
         <div className="flex-1 w-full flex flex-col gap-4">
-          {fields.map((field, index) =>
-            field.key === "user.username" ? (
-              <TextInput
-                key={index}
-                autoComplete="off"
-                disabled={loading}
-                field={field}
-                register={register}
-                errors={errors}
-                handleFocus={clearErrors}
-              />
-            ) : (
-              <PasswordInput
-                key={index}
-                disabled={loading}
-                field={field}
-                register={register}
-                errors={errors}
-                handleFocus={clearErrors}
-              />
-            )
-          )}
+          <TextInput
+            autoComplete="off"
+            disabled={loading}
+            field={fields["username"]}
+            register={register}
+            errors={errors}
+            clearErrors={clearErrors}
+          />
+          <div className="flex flex-col gap-2">
+            <PasswordInput
+              disabled={loading}
+              field={fields["password"]}
+              register={register}
+              errors={errors}
+              clearErrors={clearErrors}
+              onFocus={() => {
+                if (password.length > 0) setShowIndicator(true);
+              }}
+              onBlur={() => {
+                setShowIndicator(false);
+              }}
+            />
+            <PasswordStrengthIndicator password={password} showIndicator={showIndicator} />
+          </div>
+          <PasswordInput
+            disabled={loading}
+            field={fields["confirmpassword"]}
+            register={register}
+            errors={errors}
+            clearErrors={clearErrors}
+          />
         </div>
-        <div className="w-full flex flex-col gap-2 p-4 bg-blue-100 rounded-lg">
-          <span className="text-body-sm !text-blue-700 font-semibold">Password Requirements</span>
-          <ul className="list-disc list-inside text-blue-600 md:text-sm text-xs">
-            <li>At least 8 characters long</li>
-            <li>Include at least one uppercase letter</li>
-            <li>Include at least one number</li>
-            <li>Include at least one special character</li>
-          </ul>
-        </div>
+        <div></div>
       </div>
     </motion.div>
   );

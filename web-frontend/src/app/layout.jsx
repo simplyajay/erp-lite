@@ -24,7 +24,7 @@ const poppins = Poppins({
 const RootLayout = async ({ children }) => {
   return (
     <SkeletonTheme baseColor="#d1e0e0" highlightColor="#edf7f6">
-      <html lang="en" className={``}>
+      <html lang="en">
         <body
           className={`antialiased h-screen w-screen m-0 p-0 ${manrope.variable} ${poppins.variable}`}
         >
