@@ -1,14 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getDefaultValues, getValidationSchema } from "../util/form.util";
 import { validateFields } from "@/api/auth";
 import { validationMap } from "../util/form.util";
+import { notify } from "@/components/toast/ToastProvider";
+import { Slide } from "react-toastify";
 import useRegistrationUiStore from "@/store/useRegistraionUiStore";
 
 const useRegistration = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const { setLoading, setServerError, setShowError } = useRegistrationUiStore((state) => state);
+  const { setLoading } = useRegistrationUiStore((state) => state);
+  const toastIdRef = useRef(null);
 
   const MIN_STEP = 1;
   const MAX_STEP = 6;
@@ -95,16 +98,26 @@ const useRegistration = () => {
             const key = Object.keys(res.data)[0]; // access key inside keyValue from error
             setError(`${config.entity}.${key}`, { type: "manual", message: res.message });
           } else {
+            const message = `Oops! Something went wrong (Status ${res.status}): ${res.message}`;
+
+            notify(
+              message,
+              {
+                type: "error",
+                autoClose: 5000,
+                draggable: false,
+                transition: Slide,
+                theme: "colored",
+              },
+              toastIdRef
+            );
             console.log(res);
-            setShowError(true);
-            setServerError({ message: res.message, status: res.status });
           }
           setLoading(false);
           return;
         }
       }
 
-      setShowError(false);
       handleNext();
       setLoading(false);
     } catch (error) {

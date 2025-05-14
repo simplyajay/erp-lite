@@ -9,9 +9,10 @@ import ReviewInformation from "./steps/ReviewInformation";
 import Success from "./steps/Success";
 import StepIndicator from "./formElements/StepIndicator";
 import useRegistration from "../hooks/useRegistration";
-import { FormProvider } from "react-hook-form";
 import LoadingBar from "./formElements/LoadingBar";
 import useRegistrationUiStore from "@/store/useRegistraionUiStore";
+import { FormProvider } from "react-hook-form";
+import { ToastContainer } from "react-toastify";
 
 const RegistrationForm = () => {
   const { handleValidate, handlePrev, handleNext, formMethods, currentStep, MAX_STEP } =
@@ -58,6 +59,7 @@ const RegistrationForm = () => {
           </FormProvider>
         )}
       </div>
+      <ToastContainer className={"Toastify_toast-container"} />
     </div>
   );
 };

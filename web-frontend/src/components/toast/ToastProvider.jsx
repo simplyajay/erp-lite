@@ -1,26 +1,38 @@
-import React from "react";
-import { ToastContainer, toast, Bounce } from "react-toastify";
+import { toast, Bounce } from "react-toastify";
 
 const defaultToastConfig = {
   type: "success",
   position: "top-center",
   autoClose: 1500,
   hideProgressBar: true,
-  closeOnClick: true,
   pauseOnHover: false,
   draggable: true,
   progress: undefined,
   theme: "light",
   transition: Bounce,
-  className: "text-responsive-xs",
+  className: "text-sm !w-fit",
 };
 
-export const notify = (message, config = defaultToastConfig) => {
-  toast(message, config);
-};
+export const notify = (message, config = {}, toastIdRef) => {
+  const mergedConfig = { ...defaultToastConfig, ...config };
 
-const ToastProvider = () => {
-  return <ToastContainer />;
-};
+  const onToastClose = () => {
+    if (toastIdRef) {
+      toastIdRef.current = null;
+    }
+  };
 
-export default ToastProvider;
+  if (toastIdRef && toastIdRef.current) {
+    toast.update(toastIdRef.current, {
+      render: message,
+      ...mergedConfig,
+      onClose: onToastClose,
+    });
+  } else {
+    if (toastIdRef) {
+      toastIdRef.current = toast(message, { ...mergedConfig, onClose: onToastClose });
+    } else {
+      toast(message, { ...mergedConfig, onClose: onToastClose });
+    }
+  }
+};
