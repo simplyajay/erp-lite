@@ -4,10 +4,13 @@ import TextInput from "@/components/formfields/higher-order/TextInput";
 import { motion } from "framer-motion";
 import { fadeTransitionv1 } from "@/components/motion/transitions";
 import { useFormContext } from "react-hook-form";
+import ServerError from "../formElements/ServerError";
 import useRegistrationUiStore from "@/store/useRegistraionUiStore";
 
 const BusinessDetails = () => {
-  const loading = useRegistrationUiStore((state) => state.loading);
+  const { loading, serverError, showError, setShowError } = useRegistrationUiStore(
+    (state) => state
+  );
   const { formState, register, clearErrors } = useFormContext();
   const { errors } = formState;
   const fields = [
@@ -34,6 +37,11 @@ const BusinessDetails = () => {
             clearErrors={clearErrors}
           />
         ))}
+        {showError && (
+          <div className="w-full">
+            <ServerError error={serverError} handleClose={() => setShowError(false)} />
+          </div>
+        )}
       </div>
     </motion.div>
   );

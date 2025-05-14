@@ -8,7 +8,7 @@ import useRegistrationUiStore from "@/store/useRegistraionUiStore";
 
 const useRegistration = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const setLoading = useRegistrationUiStore((state) => state.setLoading);
+  const { setLoading, setServerError, setShowError } = useRegistrationUiStore((state) => state);
 
   const MIN_STEP = 1;
   const MAX_STEP = 6;
@@ -90,14 +90,21 @@ const useRegistration = () => {
         }, {});
         const res = await validateFields(currentValues, { params: { entity: config.entity } });
         //await new Promise((resolve) => setTimeout(resolve, 5000));
-        if (!res.ok && res.status === 409) {
-          const key = Object.keys(res.data)[0]; // access key inside keyValue from error
-          setError(`${config.entity}.${key}`, { type: "manual", message: res.message });
+        if (!res.ok) {
+          if (res.status === 409) {
+            const key = Object.keys(res.data)[0]; // access key inside keyValue from error
+            setError(`${config.entity}.${key}`, { type: "manual", message: res.message });
+          } else {
+            console.log(res);
+            setShowError(true);
+            setServerError({ message: res.message, status: res.status });
+          }
           setLoading(false);
           return;
         }
       }
 
+      setShowError(false);
       handleNext();
       setLoading(false);
     } catch (error) {
