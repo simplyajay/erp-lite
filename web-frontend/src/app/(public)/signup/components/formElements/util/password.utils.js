@@ -7,20 +7,20 @@ const STRENGTH_THRESHOLDS = {
 };
 
 export const strengthLevels = {
-  [STRENGTH_THRESHOLDS.WEAK]: { label: "Weak", color: "#F87171", percentage: 25 },
+  [STRENGTH_THRESHOLDS.WEAK]: { label: "Weak", color: "#f43f5e", percentage: 25 },
   [STRENGTH_THRESHOLDS.FAIR]: {
     label: "Fair",
-    color: "linear-gradient(to right, #F87171, #FBBF24)",
+    color: "#facc15",
     percentage: 50,
   },
   [STRENGTH_THRESHOLDS.GOOD]: {
     label: "Good",
-    color: "linear-gradient(to right, #F87171, #FBBF24, #A3E635)",
+    color: "#84cc16",
     percentage: 75,
   },
   [STRENGTH_THRESHOLDS.STRONG]: {
     label: "Strong",
-    color: "linear-gradient(to right, #F87171, #FBBF24, #A3E635, #10B981)",
+    color: "#10b981",
     percentage: 100,
   },
 };

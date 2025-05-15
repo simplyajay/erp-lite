@@ -32,16 +32,6 @@ const AccountInformation = () => {
     },
   };
 
-  const handlePasswordChange = debounce(() => {
-    if (password && password.length > 0) {
-      setShowIndicator(true);
-    }
-  }, 100);
-
-  useEffect(() => {
-    handlePasswordChange();
-    return () => handlePasswordChange.cancel(); // Cleanup debounce on component unmount
-  }, [password]);
   return (
     <motion.div className="h-full w-full flex flex-col gap-10" {...fadeTransitionv1}>
       <div className="h-full w-full flex flex-col gap-8">
@@ -65,9 +55,7 @@ const AccountInformation = () => {
               register={register}
               errors={errors}
               clearErrors={clearErrors}
-              onFocus={() => {
-                if (password.length > 0) setShowIndicator(true);
-              }}
+              onFocus={() => setShowIndicator(true)}
               onBlur={() => {
                 setShowIndicator(false);
               }}

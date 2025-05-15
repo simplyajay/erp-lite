@@ -26,7 +26,7 @@ const useRegistration = () => {
     shouldFocusError: false,
   });
 
-  const { reset, getValues, setError, watch } = formMethods;
+  const { reset, getValues, setError, watch, resetField } = formMethods;
 
   const scrollToTop = () => {
     setTimeout(() => {
@@ -40,23 +40,27 @@ const useRegistration = () => {
   const accountType = watch("accountType");
 
   useEffect(() => {
-    const { user, organization } = getDefaultValues();
     if (!accountType) return;
+
+    const { user, organization } = getDefaultValues();
     const base = {
       accountType,
       user,
     };
-
     const newValues = { ...base, ...(accountType === "organization" && { organization }) };
     reset(newValues);
-  }, [accountType]);
+  }, [reset, accountType]);
+
+  const previousStepRef = useRef(null);
 
   useEffect(() => {
-    if (currentStep === 1) {
-      reset();
+    if (previousStepRef.current === 4 && currentStep !== 4) {
+      resetField("user.password");
+      resetField("user.confirmpassword");
     }
+    previousStepRef.current = currentStep;
     scrollToTop();
-  }, [reset, currentStep]);
+  }, [resetField, currentStep]);
 
   const handlePageChange = (direction) => {
     const accountType = getValues("accountType");

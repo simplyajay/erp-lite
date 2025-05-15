@@ -22,15 +22,17 @@ const PasswordStrengthIndicator = ({ password, showIndicator }) => {
         transition={{ duration: 0.2, ease: "easeInOut" }}
         className="w-full flex flex-col gap-1"
       >
-        <div className="w-full flex justify-between">
-          <span className="text-sm font-semibold !text-gray-700">Password strength</span>
-          <span className="text-sm">{label}</span>
+        <div className="w-full flex justify-between text-sm font-semibold">
+          <span className=" !text-gray-700">Password strength</span>
+          <span style={{ color }} className="font-semi-bold">
+            {label}
+          </span>
         </div>
         <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden relative">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${percentage}%` }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="h-full rounded-full"
             style={{
               background: color,
