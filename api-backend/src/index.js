@@ -3,7 +3,7 @@ import cors from "cors";
 import envConfig from "./config/env.config.js";
 import DatabaseService from "./config/connection.js";
 import cookieParser from "cookie-parser";
-import registerRoutes from "./api/index.js";
+import registerRoutes from "./modules/index.js";
 
 const app = express();
 
