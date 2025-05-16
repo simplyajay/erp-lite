@@ -1,20 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import TextInput from "@/components/formfields/higher-order/TextInput";
 import PasswordInput from "@/components/formfields/higher-order/PasswordInput";
-import PasswordStrengthIndicator from "../formElements/PasswordStrengthIndicator";
 import { motion } from "framer-motion";
 import { fadeTransitionv1 } from "@/components/motion/transitions";
 import { useFormContext } from "react-hook-form";
-import { debounce } from "lodash";
 import useRegistrationUiStore from "@/store/useRegistraionUiStore";
 
 const AccountInformation = () => {
-  const [showIndicator, setShowIndicator] = useState(false);
   const { loading } = useRegistrationUiStore((state) => state);
-  const { formState, register, clearErrors, watch } = useFormContext();
+  const { formState, register, clearErrors } = useFormContext();
   const { errors } = formState;
-  const password = watch("user.password");
 
   const fields = {
     username: { key: "user.username", label: "Username", placeholder: "yourusername123" },
@@ -55,12 +51,7 @@ const AccountInformation = () => {
               register={register}
               errors={errors}
               clearErrors={clearErrors}
-              onFocus={() => setShowIndicator(true)}
-              onBlur={() => {
-                setShowIndicator(false);
-              }}
             />
-            <PasswordStrengthIndicator password={password} showIndicator={showIndicator} />
           </div>
           <PasswordInput
             disabled={loading}

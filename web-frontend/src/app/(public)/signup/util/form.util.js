@@ -34,21 +34,6 @@ export const validationMap = {
   },
 };
 
-export const getPasswordValidationStatus = (password) => {
-  const isMinLength = password.length >= 8;
-  const hasUppercase = /[A-Z]/.test(password);
-  const hasNumber = /[0-9]/.test(password);
-  const hasSpecialChar = /[^a-zA-Z0-9]/.test(password);
-
-  if (!isMinLength || !hasNumber) return { tier: 1, label: "Weak" };
-  if (isMinLength && hasNumber && !hasUppercase && !hasSpecialChar)
-    return { tier: 2, label: "Fair" };
-  if (hasUppercase && !hasSpecialChar) return { tier: 3, label: "Good" };
-  if (hasUppercase && hasSpecialChar) return { tier: 4, label: "Strong" };
-
-  return { tier: 2, label: "Fair" };
-};
-
 export const businessDetails = Yup.object().shape({
   name: Yup.string().required("Company name is required"),
   email: Yup.string().email("Enter a valid email address").required("Company email is required"),
@@ -77,31 +62,16 @@ export const accountInfo = Yup.object().shape({
     .matches(/[a-zA-Z]/, "Username cannot be all numbers"),
   password: Yup.string()
     .required("Please enter your password")
-    .min(8, "Password must be atleast 8 characters")
-    .test(
-      "conditional",
-      "Password must include at least one: uppercase letter, number, or symbol.",
-      (password) => {
-        const hasUppercase = /[A-Z]/.test(password);
-        const hasNumber = /[0-9]/.test(password);
-        const hasSpecialChar = /[^a-zA-Z0-9]/.test(password);
-        const conditionsMet = [hasUppercase, hasNumber, hasSpecialChar].filter(Boolean).length;
+    .min(8, "Password must be atleast 8 characters"),
+  confirmpassword: Yup.string().when("password", ([password], schema) => {
+    const isValid = password && password.length >= 8;
 
-        if (conditionsMet === 1) {
-          // Fair: At least 1 condition
-          return true; // Fair
-        } else if (conditionsMet === 2) {
-          // Good
-          return true;
-        } else if (conditionsMet === 3) {
-          // Strong
-          return true;
-        } else return false;
-      }
-    ),
-  confirmpassword: Yup.string()
-    .required("Please confirm your password")
-    .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    return isValid
+      ? schema
+          .required("Please confirm password")
+          .oneOf([Yup.ref("password"), ""], "Passwords must match")
+      : schema.notRequired();
+  }),
 });
 
 export const accountType = Yup.object().shape({
