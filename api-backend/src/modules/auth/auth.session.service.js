@@ -2,8 +2,8 @@ import userService from "../entities/user/user.service.js";
 import { comparePassword } from "../../core/services/hash.service.js";
 import { generateAuthCookies, createClearCookie } from "../../core/utils/cookie.util.js";
 
-class UserService {
-  async loginUser(req) {
+class AuthService {
+  async login(req) {
     const { password } = req.body || {};
     const user = await userService.findUserByIdentifier(req);
     if (!user) return null;
@@ -16,11 +16,11 @@ class UserService {
     return { loggedIn: true, cookies };
   }
 
-  async logoutUser() {
+  async logout() {
     const clearCookies = [createClearCookie("auth_token")];
 
     return { loggedIn: false, clearCookies };
   }
 }
 
-export default new UserService();
+export default new AuthService();

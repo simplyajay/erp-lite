@@ -1,5 +1,5 @@
-import userService from "../entities/user/user.service.js";
-import organizationService from "../entities/organization/organization.service.js";
+import userService from "../../modules/entities/user/user.service.js";
+import organizationService from "../../modules/entities/organization/organization.service.js";
 import createError from "http-errors";
 
 class ValidationService {
