@@ -1,54 +1,70 @@
 import Redis from "ioredis";
-import envConfig from "./env.config";
-const redisHost = envConfig.get("REDIS_HOST");
-const redisPort = envConfig.get("REDIS_PORT");
+import envConfig from "./env.config.js";
 
-class RedisService {
+class RedisConfig {
   constructor() {
     this.redis = null;
     this.connected = false;
+    this.connecting = false;
+  }
 
-    try {
-      this.redis = new Redis({
-        host: redisHost,
-        port: redisPort,
-        connectTimeout: 1500,
-      });
+  async connect() {
+    if (this.connected || this.connecting) return;
 
-      this.redis.on("connect", () => {
-        console.warn("Redis is connected");
+    this.connecting = true;
+
+    this.redis = new Redis({
+      host: envConfig.get("REDIS_HOST"),
+      port: envConfig.get("REDIS_PORT"),
+      connectTimeout: 1500,
+      retryStrategy: () => null, //im controlling retry
+    });
+
+    this.redis.on("end", () => {
+      this.connected = false;
+      console.warn("Redis Connection Closed");
+    });
+
+    this.redis.on("error", (error) => {
+      console.error("Redis error: ", error);
+    });
+
+    return new Promise((resolve, reject) => {
+      const cleanup = () => {
+        this.redis.off("ready", onReady);
+        this.redis.off("error", onError);
+      };
+
+      const onReady = () => {
         this.connected = true;
-      });
-      this.redis.on("error", (error) => {
-        console.warn("Redis ERROR: ", error);
+        this.connecting = false;
+        console.log("Redis Connected Successfully");
+        resolve();
+        cleanup();
+      };
+
+      const onError = (error) => {
         this.connected = false;
-      });
-    } catch (error) {
-      console.warn("Redis connection failed", error);
-    }
+        this.connecting = false;
+        console.log("Redis Connection Failed");
+        reject(error);
+        cleanup();
+      };
+
+      this.redis.once("ready", onReady);
+      this.redis.once("error", onError);
+    });
   }
 
-  async get(key) {
-    if (!this.connected) return null;
-
-    try {
-      return await this.redis.get(key);
-    } catch (error) {
-      console.warn("Error getting key: ", error);
-      return null;
-    }
+  isConnected() {
+    return this.connected;
   }
 
-  async set(key, value, ttlSeconds = 60) {
-    if (!this.connected) return;
-
-    try {
-      await this.redis.set(key, value, ttlSeconds);
-    } catch (error) {
-      console.warn("Error setting key: ", error);
-      return;
-    }
+  getClient() {
+    return this.redis;
   }
 }
 
-export default new RedisService();
+const redisConfig = new RedisConfig();
+
+export default redisConfig;
