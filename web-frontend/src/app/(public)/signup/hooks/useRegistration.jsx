@@ -95,6 +95,7 @@ const useRegistration = () => {
           acc[key] = fieldValue;
           return acc;
         }, {});
+        console.log(currentValues);
         const res = await validateFields(currentValues, { params: { entity: config.entity } });
         //await new Promise((resolve) => setTimeout(resolve, 5000));
         if (!res.ok) {

@@ -1,46 +1,23 @@
-import Redis from "ioredis";
-import envConfig from "../../config/env.config.js";
-const redisHost = envConfig.get("REDIS_HOST");
-const redisPort = envConfig.get("REDIS_PORT");
+import redisConfig from "../../config/redis.config.js";
 
 class RedisService {
   constructor() {
-    this.redis = null;
-    this.connected = false;
-
-    try {
-      this.redis = new Redis({
-        host: redisHost,
-        port: redisPort,
-        connectTimeout: 1500,
-      });
-
-      this.redis.on("connect", () => {
-        console.warn("Redis is connected");
-        this.connected = true;
-      });
-      this.redis.on("error", (error) => {
-        console.warn("Redis ERROR: ", error);
-        this.connected = false;
-      });
-    } catch (error) {
-      console.warn("Redis connection failed", error);
-    }
+    this.redis = redisConfig.getClient();
   }
 
   async get(key) {
-    if (!this.connected) return null;
+    if (!redisConfig.isConnected()) return null;
 
     try {
       return await this.redis.get(key);
     } catch (error) {
-      console.warn("Error getting key: ", error);
+      console.warn("Redis error getting key: ", error);
       return null;
     }
   }
 
   async set(key, value, ttlSeconds = 60) {
-    if (!this.connected) return;
+    if (!redisConfig.isConnected()) return;
 
     try {
       if (ttlSeconds > 0) {
@@ -49,9 +26,32 @@ class RedisService {
         await this.redis.set(key, value);
       }
     } catch (error) {
-      x;
-      console.warn("Error setting key: ", error);
+      console.warn("Redis error setting key: ", error);
       return;
+    }
+  }
+
+  async delete(key) {
+    if (!redisConfig.isConnected()) return;
+
+    try {
+      await this.redis.del(key);
+    } catch (error) {
+      console.warn("Redis error setting key: ", error);
+      return;
+    }
+  }
+
+  async setJSON(key, value, ttlSeconds = 60) {
+    return this.set(key, JSON.stringify(value), ttlSeconds);
+  }
+
+  async getJSON(key) {
+    const raw = await this.get(key);
+    try {
+      return raw ? JSON.parse(raw) : null;
+    } catch (error) {
+      console.warn("Redis error parsing key: ", error);
     }
   }
 }

@@ -2,7 +2,7 @@ import userService from "../entities/user/user.service.js";
 import { comparePassword } from "../../core/services/hash.service.js";
 import { generateAuthCookies, createClearCookie } from "../../core/utils/cookie.util.js";
 
-class AuthService {
+class AuthSessionService {
   async login(req) {
     const { password } = req.body || {};
     const user = await userService.findUserByIdentifier(req);
@@ -23,4 +23,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+export default new AuthSessionService();
