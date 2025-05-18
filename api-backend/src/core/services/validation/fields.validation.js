@@ -1,5 +1,5 @@
-import userService from "../../modules/entities/user/user.service.js";
-import organizationService from "../../modules/entities/organization/organization.service.js";
+import userService from "../../../modules/entities/user/user.service.js";
+import organizationService from "../../../modules/entities/organization/organization.service.js";
 import createError from "http-errors";
 
 class ValidationService {
@@ -12,7 +12,7 @@ class ValidationService {
       return;
     }
 
-    const fieldsToValidate = ["username", "email"];
+    const fieldsToValidate = ["username", "email"]; // update whenever necessary
     const service = entity === "organization" ? organizationService : userService;
 
     for (const field of fieldsToValidate) {
