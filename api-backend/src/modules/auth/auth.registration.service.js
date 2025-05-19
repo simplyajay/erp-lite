@@ -1,30 +1,54 @@
-// write the registration step validation here
-// step1 = business fields [name, email, trn, etc]
-// step2 = user personal information fields ( the person who is creating the business account) [name, email]
-// step3 = user account information fields ( username and password )
+import {
+  validateNoProfanity,
+  validateUniqueness,
+} from "../../core/services/validateFields.service.js";
+import redisService from "../../core/services/redis.service.js";
 
-// each step should utilize different service but execute it in the same function, 1 service fails = operation fails
-// return status 500
+const runValidators = async (validators) => {
+  for (const validator of validators) {
+    await validator();
+  }
+  return { valid: true };
+};
 
-import validateFieldsService from "../../core/services/validateFields.service.js";
-import { Filter } from "bad-words";
+const validateBusinessInformation = async (req) => {
+  const data = req.body;
+  const { entity } = req.query;
 
-class RegistrationValidationService {
-  constructor(accountType, currentStep) {
-    this.currentStep = currentStep;
-    this.accountType = accountType;
+  const validators = [() => validateUniqueness(entity, data), () => validateNoProfanity(data)];
+
+  const validatorRes = await runValidators(validators);
+
+  if (validatorRes.valid) {
+    redisService.setJSON("user:registration", data, 3600); // 1 hr life. // update to be killed immediately when user navigates away from reg form
   }
 
-  async validateCurrentStep(req) {}
+  return validatorRes;
+};
 
-  //business name, email, check profanity
-  async validateBusinessInformation(req) {}
+const validateUserInformation = async (req) => {
+  const data = req.body;
+  const { entity } = req.query;
 
-  //name, email, check profanity
-  async validateUserInformation(req) {}
+  const validators = [() => validateUniqueness(entity, data), () => validateNoProfanity(data)];
 
-  //pw, username
-  async validateAccountInformation(req) {}
-}
+  return await runValidators(validators);
+};
 
-export default RegistrationValidationService;
+const validateAccountInformation = async (req) => {};
+
+export const validateCurrentStep = async (req) => {
+  const { step } = req.query;
+
+  const validators = {
+    2: validateBusinessInformation,
+    3: validateUserInformation,
+    4: validateAccountInformation,
+  };
+
+  const validate = validators[step];
+
+  if (!validate) throw new Error(`Invalid validation step: ${step}`);
+
+  return await validate(req);
+};

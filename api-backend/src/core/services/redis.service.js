@@ -1,15 +1,20 @@
 import redisConfig from "../../config/redis.config.js";
 
 class RedisService {
-  constructor() {
-    this.redis = redisConfig.getClient();
+  //access with this.client
+  get client() {
+    return redisConfig.isConnected() ? redisConfig.getClient() : null;
+  }
+
+  isConnected() {
+    return redisConfig.isConnected();
   }
 
   async get(key) {
     if (!redisConfig.isConnected()) return null;
 
     try {
-      return await this.redis.get(key);
+      return await this.client.get(key);
     } catch (error) {
       console.warn("Redis error getting key: ", error);
       return null;
@@ -21,9 +26,9 @@ class RedisService {
 
     try {
       if (ttlSeconds > 0) {
-        await this.redis.set(key, value, "EX", ttlSeconds);
+        await this.client.set(key, value, "EX", ttlSeconds);
       } else {
-        await this.redis.set(key, value);
+        await this.client.set(key, value);
       }
     } catch (error) {
       console.warn("Redis error setting key: ", error);
@@ -35,7 +40,7 @@ class RedisService {
     if (!redisConfig.isConnected()) return;
 
     try {
-      await this.redis.del(key);
+      await this.client.del(key);
     } catch (error) {
       console.warn("Redis error setting key: ", error);
       return;

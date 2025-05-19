@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getDefaultValues, getValidationSchema } from "../util/form.util";
-import { validateFields } from "@/api/auth";
+import { validateRegistration } from "@/api/auth";
 import { validationMap } from "../util/form.util";
 import { notify } from "@/components/toast/ToastProvider";
 import { Slide } from "react-toastify";
@@ -95,11 +95,13 @@ const useRegistration = () => {
           acc[key] = fieldValue;
           return acc;
         }, {});
-        console.log(currentValues);
-        const res = await validateFields(currentValues, { params: { entity: config.entity } });
+
+        const res = await validateRegistration(currentValues, {
+          params: { step: currentStep, entity: config.entity },
+        });
         //await new Promise((resolve) => setTimeout(resolve, 5000));
         if (!res.ok) {
-          if (res.status === 409) {
+          if (res.status === 409 || res.status === 422) {
             const key = Object.keys(res.data)[0]; // access key inside keyValue from error
             setError(`${config.entity}.${key}`, { type: "manual", message: res.message });
           } else {
@@ -116,7 +118,6 @@ const useRegistration = () => {
               },
               toastIdRef
             );
-            console.log(res);
           }
           setLoading(false);
           return;
@@ -126,7 +127,6 @@ const useRegistration = () => {
       handleNext();
       setLoading(false);
     } catch (error) {
-      console.error(error);
       setLoading(false);
     }
   };

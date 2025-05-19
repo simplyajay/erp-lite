@@ -37,6 +37,16 @@ export const handleResponse = async ({
         message: conflictMessage || error.message || "Conflict: Duplicate entry",
       });
     }
-    return res.status(500).json({ ok: false, data: undefined, message: "Internal Server Error" });
+
+    if (error.status === 422) {
+      return res.status(422).json({
+        ok: false,
+        data: error.data || error.keyValue || undefined,
+        message: error.message || "This field contains inappropriate languange.",
+      });
+    }
+    return res
+      .status(500)
+      .json({ ok: false, data: undefined, message: error.message || "Internal Server Error" });
   }
 };

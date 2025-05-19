@@ -9,6 +9,6 @@ export const endSession = async (config = {}) => {
   return await handleResponse(api.get("api/auth/logout", config));
 };
 
-export const validateFields = async (values, config = {}) => {
-  return await handleResponse(api.post("api/auth/validate-field-data", values, config));
+export const validateRegistration = async (payload = {}, config = {}) => {
+  return await handleResponse(api.post(`api/auth/validate-register`, payload, config));
 };
