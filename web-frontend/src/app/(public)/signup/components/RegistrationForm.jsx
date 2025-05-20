@@ -10,7 +10,7 @@ import Success from "./steps/Success";
 import StepIndicator from "./formElements/StepIndicator";
 import useRegistration from "../hooks/useRegistration";
 import LoadingBar from "./formElements/LoadingBar";
-import useRegistrationUiStore from "@/store/useRegistraionUiStore";
+import useRegistrationUiStore from "@/store/useRegistration";
 import { FormProvider } from "react-hook-form";
 import { ToastContainer } from "react-toastify";
 

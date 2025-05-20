@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { getDefaultValues, getValidationSchema } from "../util/form.util";
-import { validateRegistration } from "@/api/auth";
+import { validateRegistrationStep, generateRegSessionId, validateRegSessionId } from "@/api/auth";
 import { validationMap } from "../util/form.util";
 import { notify } from "@/components/toast/ToastProvider";
 import { Slide } from "react-toastify";
-import useRegistrationUiStore from "@/store/useRegistraionUiStore";
+import useRegistrationUiStore from "@/store/useRegistration";
 
 const useRegistration = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -96,7 +96,7 @@ const useRegistration = () => {
           return acc;
         }, {});
 
-        const res = await validateRegistration(currentValues, {
+        const res = await validateRegistrationStep(currentValues, {
           params: { step: currentStep, entity: config.entity },
         });
         //await new Promise((resolve) => setTimeout(resolve, 5000));
@@ -121,6 +121,45 @@ const useRegistration = () => {
           }
           setLoading(false);
           return;
+        }
+      } else {
+        //request new uuid if has no active uuid
+        if (!sessionStorage.getItem("reg-session")) {
+          const res = await generateRegSessionId({ accountType });
+
+          if (!res.ok) {
+            console.warn("Failed to create uuid. Proceeding without cache");
+            return;
+          }
+
+          const { uuidv4 } = res.data;
+
+          sessionStorage.setItem("reg-session", uuidv4);
+        } else {
+          //ask backend if uuid is still active
+
+          const uuid = sessionStorage.getItem("reg-session");
+          const res = await validateRegSessionId({ uuid });
+
+          if (!res.ok) {
+            console.warn("Validation Failed.");
+            return;
+          }
+
+          const data = res.data;
+
+          if (!data.active) {
+            const res = await generateRegSessionId({ accountType });
+
+            if (!res.ok) {
+              console.warn("Failed to create uuid. Proceeding without cache");
+              return;
+            }
+
+            const { uuidv4 } = res.data;
+
+            sessionStorage.setItem("reg-session", uuidv4);
+          }
         }
       }
 

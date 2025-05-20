@@ -3,6 +3,8 @@ import {
   validateUniqueness,
 } from "../../core/services/validateFields.service.js";
 import redisService from "../../core/services/redis.service.js";
+import envConfig from "../../config/env.config.js";
+import { v4 as uuidv4 } from "uuid";
 
 const runValidators = async (validators) => {
   for (const validator of validators) {
@@ -20,7 +22,7 @@ const validateBusinessInformation = async (req) => {
   const validatorRes = await runValidators(validators);
 
   if (validatorRes.valid) {
-    redisService.setJSON("user:registration", data, 3600); // 1 hr life. // update to be killed immediately when user navigates away from reg form
+    redisService.setJSON("user:registration", data, 3600);
   }
 
   return validatorRes;
@@ -36,6 +38,41 @@ const validateUserInformation = async (req) => {
 };
 
 const validateAccountInformation = async (req) => {};
+
+export const createRegSession = async (req) => {
+  const data = req.body;
+  const { accountType, formData } = data;
+
+  if (!accountType) return;
+
+  const payload = formData ? { accountType, ...formData } : { accountType };
+
+  const registrationSessionId = uuidv4();
+
+  redisService.setJSON(
+    `${envConfig.get("REDIS_REG_PREFIX")}:reg-session-id:${registrationSessionId}`,
+    payload,
+    1800
+  );
+
+  return { uuidv4: registrationSessionId };
+};
+
+export const validateRegSession = async (req) => {
+  const { uuid } = req.body;
+
+  if (!uuid) return;
+
+  const data = await redisService.getJSON(
+    `${envConfig.get("REDIS_REG_PREFIX")}:reg-session-id:${uuid}`
+  );
+
+  if (!data) {
+    return { active: false, context: undefined };
+  }
+
+  return { active: true, context: data };
+};
 
 export const validateCurrentStep = async (req) => {
   const { step } = req.query;

@@ -1,7 +1,10 @@
 import authService from "./auth.session.service.js";
-import { validateCurrentStep } from "./auth.registration.service.js";
+import {
+  validateCurrentStep,
+  createRegSession,
+  validateRegSession,
+} from "./auth.registration.service.js";
 import { handleResponse } from "../../core/services/api.service.js";
-
 export const authenticateLogin = async (req, res) => {
   return await handleResponse({
     promise: authService.login(req),
@@ -22,6 +25,20 @@ export const authenticateLogout = async (req, res) => {
 export const validateRegistrationStep = async (req, res) => {
   return await handleResponse({
     promise: validateCurrentStep(req),
+    res,
+  });
+};
+
+export const regSessionInit = async (req, res) => {
+  return await handleResponse({
+    promise: createRegSession(req),
+    res,
+  });
+};
+
+export const regSessionStatus = async (req, res) => {
+  return await handleResponse({
+    promise: validateRegSession(req),
     res,
   });
 };

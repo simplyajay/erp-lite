@@ -9,6 +9,14 @@ export const endSession = async (config = {}) => {
   return await handleResponse(api.get("api/auth/logout", config));
 };
 
-export const validateRegistration = async (payload = {}, config = {}) => {
+export const validateRegistrationStep = async (payload = {}, config = {}) => {
   return await handleResponse(api.post(`api/auth/validate-register`, payload, config));
+};
+
+export const generateRegSessionId = async (payload = {}, config = {}) => {
+  return await handleResponse(api.post(`api/auth/registration-session/init`, payload, config));
+};
+
+export const validateRegSessionId = async (payload = {}, config = {}) => {
+  return await handleResponse(api.post(`api/auth/registration-session/status`, payload, config));
 };

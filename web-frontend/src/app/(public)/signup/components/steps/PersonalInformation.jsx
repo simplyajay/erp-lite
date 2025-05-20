@@ -4,7 +4,7 @@ import TextInput from "@/components/formfields/higher-order/TextInput";
 import { motion } from "framer-motion";
 import { fadeTransitionv1 } from "@/components/motion/transitions";
 import { useFormContext } from "react-hook-form";
-import useRegistrationUiStore from "@/store/useRegistraionUiStore";
+import useRegistrationUiStore from "@/store/useRegistration";
 
 const PersonalInformation = () => {
   const { loading } = useRegistrationUiStore((state) => state);
